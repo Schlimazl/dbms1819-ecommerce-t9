@@ -1,0 +1,17 @@
+{
+  "name": "nodehb",
+  "version": "1.0.0",
+  "description": "Simple Express App",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "*",
+    "express-handlebars": "*",
+    "pg": "^7.4.3"
+  },
+  "author": "Kirk Grospe",
+  "license": "ISC"
+}
