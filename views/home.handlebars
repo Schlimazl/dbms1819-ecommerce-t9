@@ -1,5 +1,35 @@
-<h1>Welcome!</h1>
+<div class="container">
+		<h1 class="mt-0 mb-5 text-center" style="color:lightgray">{{title}}</h1>
+		<div class="row mx-4">
+			{{#each data}}
+			<div class="col-lg-4 col-md-4 col-sm-12 mb-4 mx-auto">
+				<div class="card bg-secondary text-light center">
+					<a href="/products/{{this.id}}" class="text-light">
+						<img class="card-img-top" src="{{this.pic}}">
+						<!-- style="object-fit: cover;" height="100em" -->
+						<div class="">
+								<h6 class="card-title text-center my-3">{{this.name}}</h5>
+						</div>
+					</a>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+	
+</div>
+<div class="category-img rounded-circle" style="background-image: url('img/boyfriend.png');"></div>
 
-	{{content}}
+<h1 style="margin-top:50px; color:lightgray">About Us</h1>
+                    <div class="row">
 
+                        <p class="blockquote blockquote-primary" style="color:lightgray">
+                            Founded in 2014, 90sKidsPH started out on instagram as an online shop selling hand-made accessories. Today, the shop showcases a multitude of products from plain and striped tees, to other accessories.
+                            <br><br>
+                            The philosophy of 90sKidsPH has always been the same, we want to showcase fashion from the recent past. We aim to provide affordable 90s-themed clothing for all your aesthetic needs. 
+                            <br><br>
+                            Our shop wants to prove that it doesn’t have to be expensive to look amazing!
+                        </p>
+                    </div>
+                </div>
+            </div>
 

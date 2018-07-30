@@ -2,6 +2,9 @@ const express = require('express');
 const path = require('path');
 const exphbs = require('express-handlebars');
 const { Client } = require('pg');
+const bodyParser = require('body-parser');
+const nodemailer = require('nodemailer');
+
 
 // instantiate client using your DB configurations
 const client = new Client({
@@ -12,6 +15,14 @@ const client = new Client({
 	port: 5432,
 	ssl:true
 });
+
+client.connect()
+	.then(function() {
+		console.log('connected to database!');
+	})
+	.catch(function() {
+		console.log('Error');
+	})
 
 
 
@@ -26,10 +37,17 @@ app.set('port',(process.env.PORT || 3000));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.get('/', function(req, res) {
-	res.render('home',{
-		content: 'This is a sample of a template engine (handlebars)!',
+app.get('/', function(req,res) {
+	client.query('SELECT * FROM Products', (req, data)=>{
+		var list = [];
+		for (var i = 0; i < data.rows.length; i++) {
+			list.push(data.rows[i]);
+		}
+		res.render('home',{
+			data: list,
+			title: 'Top Products'
 		});
+	});
 });
 
 
@@ -42,21 +60,78 @@ app.get('/user/:userName', function(req, res) {
 	res.send('<h1>Hi,' + userName + '!!</h1>');
 });
 
-// connect to database
-app.get('/products',(req, res)=>{    //Routes HTTP GET requests to the specified path
-client.connect()
-	.then(()=>{
-		return client.query('SELECT * FROM Products;'); //database query
-	})
-	.then((query)=>{
-		console.log('data: ', query); //prints to stdout with newline
-		res.render('products', query); //renders a view and sends the rendered HTML string to the client
-	})
-	.catch((err) => {
-		console.log('error',err);
-		res.send('Error!');
+
+app.get('/products/:id', (req,res)=>{
+	var id = req.params.id;
+	client.query('SELECT * FROM Products', (req, data)=>{
+		var list = [];
+		for (var i = 0; i < data.rows.length+1; i++) {
+			if (i==id) {
+				list.push(data.rows[i-1]);
+			}
+		}
+		res.render('products',{
+			data: list
+		});
 	});
 });
+
+app.post('/products/:id/send', function(req, res) {
+	console.log(req.body);
+	var id = req.params.id;
+	const output = `
+		<p>You have a new contact request</p>
+		<h3>Contact Details</h3>
+		<ul>
+			<li>Customer Name: ${req.body.name}</li>
+			<li>Phone: ${req.body.phone}</li>
+			<li>Email: ${req.body.email}</li>
+			<li>Product ID: ${req.body.productid}</li>
+			<li>Quantity ${req.body.quantity}</li>
+		</ul>
+	`;
+
+	//nodemailer
+	let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+            user: 'kofe41fiho@gmail.com', 
+            pass: 'GrospeSun123' 
+        }
+    });
+
+    let mailOptions = {
+        from: '"90skidsph" <kofe41fiho@gmail.com>',
+        to: 'jhnkrkgrspe@gmail.com, reinapatricia15@gmail.com, jeurmeneta@gmail.com',
+        subject: '90kidsph Order Request',
+        //text: req.body.name,
+        html: output
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message sent: %s', info.messageId);
+        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+        client.query('SELECT * FROM Products', (req, data)=>{
+			var list = [];
+			for (var i = 0; i < data.rows.length+1; i++) {
+				if (i==id) {
+					list.push(data.rows[i-1]);
+				}
+			}
+			res.render('products',{
+				data: list,
+				msg: 'Email has been sent! :)'
+			});
+		});
+     });
+});
+
 
 app.get('/member/1', function (req, res){
 	res.render('member', {
