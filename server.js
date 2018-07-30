@@ -36,6 +36,9 @@ app.set('view engine','handlebars');
 app.set('port',(process.env.PORT || 3000));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 
 app.get('/', function(req,res) {
 	client.query('SELECT * FROM Products', (req, data)=>{
