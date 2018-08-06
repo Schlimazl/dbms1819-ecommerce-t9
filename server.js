@@ -63,6 +63,86 @@ app.get('/user/:userName', function(req, res) {
 	res.send('<h1>Hi,' + userName + '!!</h1>');
 });
 
+app.get('/brand/create', function(req, res) {
+	res.render('create-brand',{
+	});
+});
+
+app.get('/category/create', function(req, res) {
+	res.render('create-category',{
+	});
+});
+
+app.get('/product/create', function(req, res) {
+	 var category = []; 
+	 var brand = [];
+	 var both =[];
+	 client.query('SELECT * FROM products_brand')
+	.then((result)=>{
+	    brand = result.rows;
+	    console.log('brand:',brand);
+	     both.push(brand);
+	})
+	.catch((err) => {       
+		console.log('error',err);
+		res.send('Error!');
+	});
+    client.query('SELECT * FROM products_category')
+	.then((result)=>{
+	    category = result.rows;
+	    both.push(category);
+	    console.log(category);
+	    console.log(both);
+		res.render('create-product',{
+			rows: both
+		});
+	})
+	.catch((err) => {
+		console.log('error',err);
+		res.send('Error!');
+	});
+
+});
+
+app.get('/product/update/:id', function(req, res) {
+     var category = []; 
+	 var brand = [];
+	 var both =[];
+	  client.query('SELECT * FROM products_brand;')
+	.then((result)=>{
+		brand = result.rows;
+	    console.log('brand:',brand);
+	    both.push(brand);
+	})
+	.catch((err) => {
+		console.log('error',err);
+		res.send('Error!');
+	});
+    client.query('SELECT * FROM products_category;')
+	.then((result)=>{
+		category = result.rows;
+	  
+	    both.push(category);
+	      console.log('both',both);
+	})
+	.catch((err) => {
+		console.log('error',err);
+		res.send('Error!');
+	});
+	 client.query('SELECT products.id AS productsid,products.pic AS productspic,products.name AS productsname, products.descriptions AS productsdesc,products.price AS productsprice,products_brand.name AS productsbrand,products_brand.description AS branddesc,products_category.name AS categoryname FROM products INNER JOIN products_brand ON products.brand_id=products_brand.id INNER JOIN products_category ON products.category_id=products_category.id WHERE products.id = '+req.params.id+';')
+	.then((result)=>{
+		res.render('update-product', {
+			rows: result.rows[0],
+			brand: both
+		});
+	})
+	.catch((err) => {
+		console.log('error',err);
+		res.send('Error!');
+	});
+
+	});
+
 
 app.get('/products/:id', (req,res)=>{
 	var id = req.params.id;
@@ -77,6 +157,56 @@ app.get('/products/:id', (req,res)=>{
 			data: list
 		});
 	});
+});
+
+app.get('/brands', function(req, res) {
+		 client.query('SELECT * FROM products_brand')
+	.then((result)=>{
+	    console.log('results?', result);
+		res.render('brand-list', result);
+	})
+	.catch((err) => {
+		console.log('error',err);
+		res.send('Error!');
+	});
+
+	});
+
+app.get('/categories', function(req, res) {
+		 client.query('SELECT * FROM products_category')
+	.then((result)=>{
+	    console.log('results?', result);
+		res.render('category-list', result);
+	})
+	.catch((err) => {
+		console.log('error',err);
+		res.send('Error!');
+	});
+
+	});
+
+
+
+app.post('/insertbrand', function(req, res) {
+	client.query("INSERT INTO products_brand (name,description) VALUES ('"+req.body.name+"','"+req.body.description+"')");
+	res.redirect('/brands');
+});
+
+app.post	('/insertcategory', function(req, res) {
+	client.query("INSERT INTO products_category (name) VALUES ('"+req.body.name+"')");
+	res.redirect('/categories');
+});
+
+app.post('/insertproduct', function(req, res) {
+	client.query("INSERT INTO products (name,descriptions,price,category_id,brand_id,pic) VALUES ('"+req.body.name+"', '"+req.body.descriptions+"', '"+req.body.price+"', '"+req.body.category+"', '"+req.body.brand+"','"+req.body.pic+"')");
+	res.redirect('/');
+});
+
+app.post('/updateproduct/:id', function(req, res) {
+	client.query("UPDATE products SET name = '"+req.body.productsname+"', descriptions = '"+req.body.productsdesc+"', price = '"+req.body.productsprice+"',category_id = '"+req.body.category+"', brand_id = '"+req.body.brand+"', pic = '"+req.body.productspic+"'WHERE id = '"+req.params.id+"' ;");
+	client.query("UPDATE products_brand SET description = '"+req.body.branddesc+"' WHERE id ='"+req.params.id+"';");
+	
+	res.redirect('/');
 });
 
 app.post('/products/:id/send', function(req, res) {
@@ -136,6 +266,8 @@ app.post('/products/:id/send', function(req, res) {
 });
 
 
+
+
 app.get('/member/1', function (req, res){
 	res.render('member', {
 		name: 'Kirk M. Grospe',
@@ -162,4 +294,3 @@ app.get('/member/2', function (req, res){
 app.listen(app.get('port'), function() {
 	console.log('Server started at port 3000');
 });
-
