@@ -145,20 +145,18 @@ app.get('/product/update/:id', function(req, res) {
 
 
 app.get('/products/:id', (req,res)=>{
-	var id = req.params.id;
-	client.query('SELECT * FROM Products', (req, data)=>{
-		var list = [];
-		for (var i = 0; i < data.rows.length+1; i++) {
-			if (i==id) {
-				list.push(data.rows[i-1]);
-			}
-		}
-		res.render('products',{
-			data: list
-		});
+	//var id = req.params.id;
+	client.query('select products_category.name AS categoryname,products.price AS price,products.name AS productname,products.pic AS pic,products_brand.description AS desc,products_brand.name AS productbrand FROM products INNER JOIN products_category ON products_category.id = products.category_id INNER JOIN products_brand ON products_brand.id = products.brand_id WHERE products.id='+req.params.id+'   ;')
+	.then((results)=>{
+		console.log('results!',results);
+		res.render('products',results)
+	})
+		.catch((err) => {
+		console.log('error',err);
+		res.send('Error!');
 	});
-});
 
+	});
 app.get('/brands', function(req, res) {
 		 client.query('SELECT * FROM products_brand')
 	.then((result)=>{
@@ -178,6 +176,45 @@ app.get('/categories', function(req, res) {
 	    console.log('results?', result);
 		res.render('category-list', result);
 	})
+	.catch((err) => {
+		console.log('error',err);
+		res.send('Error!');
+	});
+
+	});
+
+app.get('/customers', function(req, res) {
+		 client.query('SELECT * FROM customers ORDER BY id DESC')
+	.then((result)=>{
+	    console.log('results?', result);
+		res.render('customers', result);
+	})
+	.catch((err) => {
+		console.log('error',err);
+		res.send('Error!');
+	});
+
+	});
+
+app.get('/customers/:id', function(req, res) {
+	 client.query('select customers.first_name AS fname, customers.last_name AS lname, customers.email AS email, customers.house_number AS hnumber, customers.street AS street, customers.barangay AS brgy, customers.city AS city, customers.country AS country, products.name AS pname, orders.quantity AS qty, orders.order_date AS ordate FROM orders INNER JOIN products ON products.id = orders.products_id  INNER JOIN customers ON customers.id = orders.customers_id WHERE customers.id = '+req.params.id+'')
+	.then((result)=>{
+	    console.log('results?', result);
+		res.render('customer-details', result);
+	})
+	.catch((err) => {
+		console.log('error',err);
+		res.send('Error!');
+	});
+
+	});
+
+app.get('/orders', function(req, res) {
+	 client.query("SELECT customers.first_name AS fname,customers.last_name AS lname,customers.email AS email,products.name AS product,orders.quantity AS qty,orders.order_date AS orderdate FROM orders INNER JOIN customers ON customers.id=orders.customers_id INNER JOIN products ON products.id=orders.products_id ORDER BY orderdate DESC;")
+	.then((result)=>{
+	    console.log('results?', result);
+		res.render('orders', result);
+		})
 	.catch((err) => {
 		console.log('error',err);
 		res.send('Error!');
@@ -210,59 +247,69 @@ app.post('/updateproduct/:id', function(req, res) {
 });
 
 app.post('/products/:id/send', function(req, res) {
-	console.log(req.body);
-	var id = req.params.id;
-	const output = `
-		<p>You have a new contact request</p>
-		<h3>Contact Details</h3>
-		<ul>
-			<li>Customer Name: ${req.body.name}</li>
-			<li>Phone: ${req.body.phone}</li>
-			<li>Email: ${req.body.email}</li>
-			<li>Product ID: ${req.body.productid}</li>
-			<li>Quantity ${req.body.quantity}</li>
-		</ul>
-	`;
+   client.query("INSERT INTO customers (email, first_name, last_name,house_number,street,barangay,city,country) VALUES ('"+req.body.email+"', '"+req.body.first_name+"', '"+req.body.last_name+"', '"+req.body.house_number+"', '"+req.body.street+"', '"+req.body.barangay+"', '"+req.body.city+"', '"+req.body.country+"') ON CONFLICT (email) DO UPDATE SET first_name = ('"+req.body.fname+"'), last_name = ('"+req.body.lname+"'), house_number = ('"+req.body.house_number+"'),street = ('"+req.body.street+"'),barangay = ('"+req.body.barangay+"'),city = ('"+req.body.city+"'), country = ('"+req.body.country+"') WHERE customers.email ='"+req.body.email+"';");
+	client.query("SELECT id from customers WHERE email = '"+req.body.email+"';")
+   	.then((results)=>{
+   		var id = results.rows[0].id;
+   		console.log(id);
+   		client.query("INSERT INTO orders (customers_id,products_id,quantity) VALUES ('"+id+"','"+req.body.productid+"','"+req.body.quantity+"')")
+   		.then((results)=>{
+   		 var maillist = ['kofe41fiho@gmail.com', 'jhnkrkgrspe@gmail.com',req.body.email];
+     	 var transporter = nodemailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 465,
+          secure: true,
+          auth: {
+              user: 'kofe41fiho@gmail.com',
+              pass: 'GrospeSun123'
+          }
+      });
+      const mailOptions = {
+          from: '"90skidsph" <kofe41fiho@gmail.com>', // sender address
+          to: maillist, // list of receivers
+          subject: 'Order Details', // Subject line
+          html:  
+				 '<table >'+
+				   ' <thead>'+
+				      '<tr>'+
+				       '<th>Customer</th>'+
+				       '<th>Name</th>'+
+				       '<th>Email</th>'+
+				       '<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>'+
+				       '<th>Product</th>'+
+				       '<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>'+
+				       '<th>Quantity</th>'+
+				    '</thead>'+
+				    '<tr>'+
 
-	//nodemailer
-	let transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
-        auth: {
-            user: 'kofe41fiho@gmail.com', 
-            pass: 'GrospeSun123' 
-        }
-    });
+				      '<td>'+req.body.first_name+'</td>'+
+				      '<td>'+req.body.last_name+'</td>'+
+				      '<td>'+req.body.email+'</td>'+
+				       '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>'+
+				     ' <td>'+req.body.productname+'</td>'+
+				     '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>'+
+				     ' <td>'+req.body.quantity+'</td>'+
+				      '</tr>'+
+				   ' </tbody>'
+      };
 
-    let mailOptions = {
-        from: '"90skidsph" <kofe41fiho@gmail.com>',
-        to: 'jhnkrkgrspe@gmail.com, reinapatricia15@gmail.com, jeurmeneta@gmail.com',
-        subject: '90kidsph Order Request',
-        //text: req.body.name,
-        html: output
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return console.log(error);
-        }
-        console.log('Message sent: %s', info.messageId);
-        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-
-        client.query('SELECT * FROM Products', (req, data)=>{
-			var list = [];
-			for (var i = 0; i < data.rows.length+1; i++) {
-				if (i==id) {
-					list.push(data.rows[i-1]);
-				}
-			}
-			res.render('products',{
-				data: list,
-				msg: 'Email has been sent! :)'
-			});
-		});
-     });
+      transporter.sendMail(mailOptions, (error, info) => {	
+          if (error) {
+              return console.log(error);
+          }
+          console.log('Message %s sent: %s', info.messageId, info.response);;
+          res.redirect('/');
+          });
+   		})
+   		.catch((err)=>{
+   		console.log('error',err);
+		res.send('Error!');
+   		});
+   	})
+   	.catch((err) => {
+		console.log('error',err);
+		res.send('Error!');
+	});
 });
 
 

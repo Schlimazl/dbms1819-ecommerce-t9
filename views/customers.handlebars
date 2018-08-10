@@ -1,0 +1,28 @@
+<div class="container">
+<table class="table table-hover table-dark" style="margin-bottom: 60%">
+  <thead>
+    <tr class="clickable-row" data-href="/customers/{{this.id}}">
+      <th scope="col">Customer Number</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Email</th>
+     </thead>
+  <tbody>
+    {{#each rows}}
+    <tr>
+        <td>{{this.id}}</td>
+        <td>{{this.first_name}}</td>
+        <td>{{this.last_name}}</td>
+        <td>{{this.email}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+
+</table>
+</div>
+
+jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+});
