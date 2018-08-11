@@ -1,0 +1,49 @@
+<h2 style="margin-left: 200px; margin-top: 30px; color:lightgray;"><i class="fas fa-user">&nbsp;</i>Customer Details</h2>
+<div class="container" style="margin-bottom: 150px">
+<table class="table table-hover table-dark">
+  <thead>
+    <tr>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">House Number</th>
+      <th scope="col">Street</th>
+      <th scope="col">Barangay</th>
+      <th scope="col">City</th>
+      <th scope="col">Country</th>
+     </thead>
+  <tbody>
+    <tr>
+        <td>{{rows.0.fname}}</td>
+        <td>{{rows.0.lname}}</td>
+        <td>{{rows.0.email}}</td>
+        <td>{{rows.0.hnumber}}</td>
+        <td>{{rows.0.street}}</td>
+        <td>{{rows.0.brgy}}</td>
+        <td>{{rows.0.city}}</td>
+        <td>{{rows.0.country}}</td>
+      </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 style="margin-left: 200px; margin-top: 30px; color:lightgray;"><i class="fas fa-money-bill-alt">&nbsp;</i>Order Details</h2>
+<div class="container">
+<table class="table table-hover table-dark" style="margin-bottom: 60%">
+  <thead>
+    <tr>
+      <th scope="col">Ordered Products</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Transaction Date</th>
+     </thead>
+  <tbody>
+  	{{#each rows}}
+    <tr>
+        <td>{{this.pname}}</td>
+        <td>{{this.qty}}</td>
+        <td>{{this.orderdate}}</td>
+      </tr>
+      {{/each}}
+  </tbody>
+</table>
+</div>

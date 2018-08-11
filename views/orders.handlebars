@@ -1,0 +1,26 @@
+<div class="container">
+<table class="table table-hover table-dark" style="margin-bottom: 60%">
+  <thead>
+    <tr class="clickable-row" data-href="/customers/{{this.id}}">
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Product</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Order Date</th>
+     </thead>
+  <tbody>
+    {{#each rows}}
+    <tr>
+        <td>{{this.fname}}</td>
+        <td>{{this.lname}}</td>
+        <td>{{this.email}}</td>
+        <td>{{this.product}}</td>
+        <td>{{this.qty}}</td>
+        <td>{{this.orderdate}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+
+</table>
+</div>

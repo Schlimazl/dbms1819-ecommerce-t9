@@ -3,9 +3,10 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name = "viewport" content = "width = device-width, initial-scale = 1">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">		
-		<title>My Express App</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+		<title>90skidsph</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 		
 <style>
 		.card {
@@ -68,46 +69,54 @@ li a {
 li a:hover {
     background-color: #111;
 }
+table#example {
+    border-collapse: collapse;   
+}
+#example tr {
+    background-color: #eee;
+    border-top: 1px solid #fff;
+}
+#example tr:hover {
+    background-color: #ccc;
+}
+#example th {
+    background-color: #fff;
+}
+#example th, #example td {
+    padding: 3px 5px;
+}
+#example td:hover {
+    cursor: pointer;
+}
 
 
 </style>
 	</head>
 	<body style="background-image:url(/pointer.jpg); background-size: 100% 100%; background-repeat: no-repeat; background-attachment: fixed;">
 		
+		<nav class="navbar navbar-light" style="background-color: #262626;">         
+          
+            <a class="pb-2 d-none d-md-inline-block" href="../../" style="font-size:30px; color:lightgray;"><i class="fas fa-home" style="color:lightgray;font-size:30px"></i>&nbsp;HOME</a>  
+            <a class="pb-2 d-none d-md-inline-block" href="/brands" style="font-size:30px;color:lightgray;"><i class="fas fa-align-justify" style="color:lightgray;font-size:30px"></i>&nbsp;BRANDS</a>
+            <a class="pb-2 d-none d-md-inline-block" href="/categories" style="font-size:30px;color:lightgray;"><i class="fas fa-tshirt" style="color:lightgray;font-size:30px"></i>&nbsp;CATEGORY</a>
+            <a class="pb-2 d-none d-md-inline-block" href="/orders" style="font-size:30px;color:lightgray;"><i class="fas fa-shopping-cart" style="color:lightgray;font-size:30px"></i>&nbsp;ORDERS</a>
+            <a class="pb-2 d-none d-md-inline-block" href="/customers" style="font-size:30px;color:lightgray;"><i class="fas fa-users" style="color:lightgray;font-size:30px"></i>&nbsp;CUSTOMERS</a>
+        </nav>
+        
+        <br>
 		{{{body}}}
+
 		
 
-<footer class="footer" data-background-color="black" style="color:lightgray; position:fixed; left:0; bottom:0; width:100%; text-align:center;">
-                <div class="container">
-                	<div class="section section-download" id="#download-section" data-background-color="white" >
-                <div class="container">
-                    <div class="row justify-content-md-center">
-                        <div class="text-center col-md-12 col-lg-8">
-                            <h3 class="title" style="color:lightgray ">Visit our Facebook page and<br>follow us on Instagram!</h3>
-                        </div>
-                        <div class="text-center col-md-12 col-lg-8">
-                            <a target="_blank" href="https://www.facebook.com/90sKidsPh/" class="btn btn-neutral btn-icon btn-facebook btn-round btn-lg" rel="tooltip" title="Like us" style="color:lightgray">
-                                <i class="fa fa-facebook-square"></i>
-                            </a>
-                            <a target="_blank" href="https://www.instagram.com/90skidsph/?hl=en" class="btn btn-neutral btn-icon btn-insagram btn-round btn-lg" rel="tooltip" title="Follow us" style="color:lightgray">
-                                <i class="fa fa-instagram"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                    <nav>
-                        <ul>
-                            <li>
-                                90's Kids PH (c) Kirk Grospe & Reina Sun
+<div class="footer" data-background-color="lightgray" style="position: relative; height: 100px; margin-top: -100px;
+clear:both; text-align: center;">
+					<h3 class="title" style="color:lightgray ">Visit our Facebook page and<br>follow us on Instagram!</h3>
+                            <a target="_blank" href="https://www.facebook.com/90sKidsPh/" class="fab fa-facebook-square" rel="tooltip" title="Like us" style="color:lightgray">&nbsp;&nbsp;&nbsp;</a>
+                            <a target="_blank" href="https://www.instagram.com/90skidsph/?hl=en" class="fab fa-instagram" rel="tooltip" title="Follow us" style="color:lightgray"></a>
+</div>
+           
 
-
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </footer>
-        </div>            
+       
 	
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
