@@ -37,11 +37,13 @@
       <th scope="col">Transaction Date</th>
      </thead>
   <tbody>
+  	{{#each rows}}
     <tr>
-        <td>{{rows.0.pname}}</td>
-        <td>{{rows.0.qty}}</td>
-        <td>{{rows.0.odate}}</td>
+        <td>{{this.pname}}</td>
+        <td>{{this.qty}}</td>
+        <td>{{this.orderdate}}</td>
       </tr>
+      {{/each}}
   </tbody>
 </table>
 </div>

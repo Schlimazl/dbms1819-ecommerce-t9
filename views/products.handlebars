@@ -10,7 +10,7 @@
 						</p>
 							<h7 class="card-title">{{rows.0.desc}}</h7>
 					</div>
-					<a role="button" class="btn btn-secondary btn-lg btn-block" style="background-color: #262626;color:lightgray; margin-left: 0%; margin-top: 50px"href="d/prouct/update/{{this.brand_id}}">Update Product</button></a>
+					<a role="button" class="btn btn-secondary btn-lg btn-block" style="background-color: #262626;color:lightgray; margin-left: 0%; margin-top: 50px"href="/product/update/{{rows.0.id}}">Update Product</button></a>
 	</div>
 				</div>
 			</div>
@@ -18,14 +18,14 @@
 		<div class="container pb-5 mb-5">
 	<div class="jumbotron mt-2">
 		<h2>Order Form</h2>
-		<h4>{{msg}}</h4>
-		<form method="POST" action="{{this.id}}/send">
+		<form method="POST" action="{{rows.0.id}}/send">
+
 			<div class="controls">
 				<div class="form-group">
 					<label class="control-label" for="quantity">Quantity: </label>
 					<div>
-						<input id="quantity" name="quantity" type="number" placeholder="100" class="form-control" required="">
-						<input type = "hidden" name="productname" type="text" value="{{name}}">
+						<input id="quantity" name="quantity" type="number" placeholder="1" class="form-control" required="">
+						<input type = "hidden" name="productname" type="text" value="{{rows.0.productname}}">
 					</div>
 				</div>
 				<div class="form-group">
@@ -79,7 +79,7 @@
 				<div class="form-group">
 					<label class="control-label" for="productid">Product ID: </label>
 					<div>
-						<input id="productid" name="productid" type="text" value="{{this.id}}" class="form-control" required="" readonly="">
+						<input id="productid" name="productid" type="text" value="{{rows.0.id}}" class="form-control" required="" readonly="">
 					</div>
 				</div>
 				
