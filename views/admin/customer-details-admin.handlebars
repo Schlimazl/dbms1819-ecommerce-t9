@@ -1,0 +1,110 @@
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Customers' Details</h4>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>
+                          First Name
+                        </th>
+                        <th>
+                          Last Name
+                        </th>
+                        <th>
+                          Email
+                        </th>
+                        <th>
+                          House Number
+                        </th>
+                        <th>
+                          Street
+                        </th>
+                        <th>
+                          Barangay
+                        </th>
+                        <th>
+                          City
+                        </th>
+                        <th>
+                          Country
+                        </th>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{rows.0.fname}}</td>
+                          <td>{{rows.0.lname}}</td>
+                          <td>{{rows.0.email}}</td>
+                          <td>{{rows.0.hnumber}}</td>
+                          <td>{{rows.0.street}}</td>
+                          <td>{{rows.0.brgy}}</td>
+                          <td>{{rows.0.city}}</td>
+                          <td>{{rows.0.country}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <!-- your content here -->
+        </div>
+      </div>
+
+            <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Transaction Details</h4>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>
+                          Ordered Products
+                        </th>
+                        <th>
+                          Quantity
+                        </th>
+                        <th>
+                          Transaction Date
+                        </th>
+                      </thead>
+                      <tbody>
+                       {{#each rows}}
+                          <tr>
+                              <td>{{this.pname}}</td>
+                              <td>{{this.qty}}</td>
+                              <td>{{this.orderdate}}</td>
+                          </tr>
+                            {{/each}}
+                       </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <!-- your content here -->
+        </div>
+      </div>
+
+
+
+
+
+
+

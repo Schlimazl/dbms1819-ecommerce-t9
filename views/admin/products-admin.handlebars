@@ -1,0 +1,68 @@
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Products</h4>
+                  <a role="button" class="btn btn-primary btn-sm" href="/admin/product/create" style="background-color: white; color: purple">Add a product</button></a>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>
+                          Product Name
+                        </th>
+                        <th>
+                          Brand
+                        </th>
+                        <th>
+                          Category
+                        </th>
+                        <th>
+                          Price
+                        </th>
+                        <th>
+                          Description
+                        </th>
+                        <th class="text-right">
+                          Action
+                        </th>
+                      </thead>
+                      <tbody>
+                        {{#each rows}}
+                        <tr>
+                            <td>{{this.productname}}</td>
+                            <td>{{this.productbrand}}</td>
+                            <td>{{this.categoryname}}</td>
+                            <td>{{this.price}}</td>
+                            <td>{{this.desc}}</td>
+                            <td class="td-actions text-right">
+                                <a role="button" href="/admin/products/{{this.id}}" rel="tooltip" class="btn btn-info" data-toggle="popover" data-content="Update">
+                                    <i class="material-icons">photo_album</i>
+                                </button></a>
+                                <a role="button" href="/admin/product/update/{{this.id}}" rel="tooltip" class="btn btn-success" data-toggle="popover" data-content="Update">
+                                    <i class="material-icons">build</i>
+                                </button>
+                                
+                           </td>
+                          </tr>
+                        {{/each}}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <!-- your content here -->
+        </div>
+      </div>
+
+
+
+
+
