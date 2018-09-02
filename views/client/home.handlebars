@@ -1,36 +1,131 @@
-
-
-<div class="container">
-		<h1 class="mt-0 mb-5 text-center" style="color:white">{{title}}</h1>
-		<div class="row mx-4">
-			{{#each products}}
-			<div class="col-lg-4 col-md-4 col-sm-12 mb-4 mx-auto">
-				<div class="card bg-secondary text-light center">
-					<a href="/products/{{id}}" class="text-light">
-						<img class="card-img-top" src="{{pic}}">
-						
-						<div class="">
-								<h6 class="card-title text-center my-3">{{name}}</h5>
-						</div>
-					</a>
-				</div>
-			</div>
-			{{/each}}
-		</div>	
-</div>
-
-
-<h1 style="margin-top:50px; margin-left: 55px; color:lightgray;">About Us</h1>
-                    <div class="row">
-
-                        <p class="blockquote blockquote-primary" style="color:lightgray; border: 2px solid white; border-radius: 5px; margin-left: 70px; margin-bottom: 150px">
-                            Founded in 2014, 90sKidsPH started out on instagram as an online shop selling hand-made accessories. Today, the shop showcases a multitude of products from plain and striped tees, to other accessories.
-                            <br><br>
-                            The philosophy of 90sKidsPH has always been the same, we want to showcase fashion from the recent past. We aim to provide affordable 90s-themed clothing for all your aesthetic needs. 
-                            <br><br>
-                            Our shop wants to prove that it doesn’t have to be expensive to look amazing!
-                        </p>
-                    </div>
-                </div>
+{{> header}}
+      
+      <div class="hero hero-slider">
+        <ul class="slides">
+        	{{#each rows}}
+          <li data-bg-image="{{this.pic}}">
+            <div class="container">
+              <h3 class="slider-subtitle">Featured Blog</h3>
+              <h2 class="slider-title">{{this.name}}</h2>
+              <p>{{this.description}}</p>
+              <a href="{{this.url}}" class="button large">Read more</a>
             </div>
+            {{/each}}
+          </li>
+        </ul>
+      </div>
+
+      <!--OUR SERVICES-->
+
+        <div class="fullwidth-block features-section">
+          <div class="container">
+            <h2 class="section-title">our Services</h2>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="feature">
+                  <img src="images/icon-1.png" class="feature-image">
+                  <h3 class="feature-title">Voluptatem</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur dolor perferendis blanditiis voluptate maiores </p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="feature">
+                  <img src="images/icon-2.png" class="feature-image">
+                  <h3 class="feature-title">COnsequatur</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse, minus, totam. Officia ea accusamus quis tenetur quas </p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="feature">
+                  <img src="images/icon-3.png" class="feature-image">
+                  <h3 class="feature-title">Temporibus</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste, omnis cum, quo dolorem molestias asperiores doloremque dolorum</p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="feature">
+                  <img src="images/icon-4.png" class="feature-image">
+                  <h3 class="feature-title">Perferendis</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, facere numquam porro amet reiciendis maiores odio velit</p>
+                </div>
+              </div>
+            </div> <!-- .row -->
+          </div> <!-- .container -->
+        </div> <!-- .fullwidth-block.features-section -->
+
+        <div class="fullwidth-block team-section">
+          <div class="container">
+            <h2 class="section-title">Our team</h2>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="team">
+                  <figure class="team-image"><img src="dummy/1.jpeg"></figure>
+                  <h3 class="team-name">Sarah james</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio nihil distinctio natus doloremque id tempore repellendus atque</p>
+                  <div class="social-links">
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="#"><i class="fa fa-google-plus"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="team">
+                  <figure class="team-image"><img src="dummy/2.jpeg"></figure>
+                  <h3 class="team-name">Marta Smith</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta iste natus voluptatum eius? Vitae accusantium, deserunt maiores incidunt</p>
+                  <div class="social-links">
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="#"><i class="fa fa-google-plus"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="team">
+                  <figure class="team-image"><img src="dummy/3.jpeg"></figure>
+                  <h3 class="team-name">Nicole Johnson</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur aut, laboriosam iure, quisquam reiciendis voluptas.</p>
+                  <div class="social-links">
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="#"><i class="fa fa-google-plus"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="team">
+                  <figure class="team-image"><img src="dummy/4.jpeg"></figure>
+                  <h3 class="team-name">Alicia Brown</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla itaque veritatis amet unde aliquid, non tenetur doloremque</p>
+                  <div class="social-links">
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="#"><i class="fa fa-google-plus"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- .row -->
+          </div> <!-- .container -->
+        </div> <!-- .fullwidth-block.team-section -->
+
+        <div class="fullwidth-block information-section">
+          <div class="container">
+            <h2 class="section-title">Information</h2>
+            <div class="row">
+              <div class="col-md-4">
+                <figure><img src="dummy/salon.jpeg" ></figure>
+              </div>
+              <div class="col-md-4">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque omnis minima accusamus nihil eligendi quas cumque rerum odit quo architecto repudiandae adipisci repellendus velit nostrum sed quisquam doloribus, consequatur sint. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque omnis minima accusamus nihil eligendi quas cumque rerum odit quo architecto repudiandae adipisci repellendus velit nostrum sed quisquam doloribus, consequatur sint.</p>
+              </div>
+              <div class="col-md-4">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium odit, blanditiis aliquam officia soluta modi amet ex nihil nulla minima. Nam earum est magnam tempore corrupti quos consequatur, numquam voluptas! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque omnis minima accusamus nihil eligendi quas cumque rerum odit quo architecto repudiandae adipisci repellendus velit nostrum sed quisquam doloribus, consequatur sint.</p>
+              </div>
+            </div>
+          </div>
+        </div> <!-- .fullwidth-block.information-section -->
+      </main>
+
+{{> footer}}
 

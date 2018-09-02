@@ -47,8 +47,22 @@ app.use(bodyParser.json());
 //      list.push(data.rows[i]);
 //    }
 app.get('/', function (req, res) {
-  Product.list(client, {}, function (products) {
+  client.query('SELECT * FROM blog')
+  .then((results) =>{
+    console.log('results?', results);
     res.render('client/home', {
+      rows: results.rows
+    })
+  .catch((err) => {
+    console.log('error', err);
+    res.send('Error!');
+    });
+  });
+});
+
+app.get('/products', function (req, res) {
+  Product.list(client, {}, function (products) {
+    res.render('client/product-list', {
       title: 'Top Products',
       products: products
     });

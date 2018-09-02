@@ -1,0 +1,21 @@
+{{> header}}
+
+<main class="main-content">	
+					<div class="container">
+							<div class="fullwidth-block team-section">
+							   <div class="container">
+							      <h2 class="section-title">Products</h2>
+							         {{#each products}}
+							           <div class="row">
+							             <div class="col-md-3">
+							               <div class="team">
+							                  <figure class="team-image"><img src="{{pic}}"></figure>
+							                  <h3 class="team-name"><a href="/products/{{id}}">{{name}}</h3></a>
+							                  <p>{{descriptions}}</p>
+							                </div>
+							            </div>
+							              {{/each}}
+												</div>
+							</main>
+
+{{> footer}}
