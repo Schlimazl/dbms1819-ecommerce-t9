@@ -5,7 +5,7 @@ var Product = {
         products.id AS id,
         products.name AS productname,
         products.pic AS pic,
-        products_brand.description AS desc,
+        products.descriptions AS desc,
         products_brand.name AS productbrand
       FROM products 
       INNER JOIN products_category 

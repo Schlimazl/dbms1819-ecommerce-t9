@@ -116,7 +116,7 @@ app.get('/admin', function (req, res) {
 
 // ------------------------PRODUCTS---------------------------------------------
 app.get('/admin/products', (req, res) => {
-  client.query('select products_category.name AS categoryname,products.price AS price,products.id AS id, products.name AS productname,products.pic AS pic,products_brand.description AS desc,products_brand.name AS productbrand FROM products INNER JOIN products_category ON products_category.id = products.category_id INNER JOIN products_brand ON products_brand.id = products.brand_id')
+  client.query('select products_category.name AS categoryname,products.price AS price,products.id AS id, products.name AS productname,products.pic AS pic,products.descriptions AS desc,products_brand.name AS productbrand FROM products INNER JOIN products_category ON products_category.id = products.category_id INNER JOIN products_brand ON products_brand.id = products.brand_id')
     .then((results) => {
       console.log('results?', results);
       res.render('admin/products-admin', {
