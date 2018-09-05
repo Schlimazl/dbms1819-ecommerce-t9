@@ -16,9 +16,11 @@
     ]
   },
   "dependencies": {
+    "dotenv": "^6.0.0",
     "express": "*",
     "express-handlebars": "*",
     "express-layout": "^0.1.0",
+    "handlebars.moment": "^1.0.4",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.21",
     "nodemailer": "^4.6.7",

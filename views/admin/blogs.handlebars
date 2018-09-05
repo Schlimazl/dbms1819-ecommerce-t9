@@ -7,40 +7,42 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Orders</h4>
+                  <h4 class="card-title ">Blogs</h4>
+                  <a role="button" class="btn btn-primary btn-sm" href="/admin/blog/add" style="background-color: white; color: purple">Add a blog</button></a>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table">
                       <thead class=" text-primary">
                         <th>
-                          First Name
+                          Blog Name
                         </th>
                         <th>
-                          Last Name
+                          Description
                         </th>
                         <th>
-                          Email
+                          URL
                         </th>
                         <th>
-                          Product
+                          Image
                         </th>
-                        <th>
-                          Quantity
-                        </th>
-                        <th>
-                          Transaction Date
+                        <th class="text-right">
+                          Action
                         </th>
                       </thead>
                       <tbody>
                         {{#each rows}}
                         <tr>
-                            <td>{{this.fname}}</td>
-                            <td>{{this.lname}}</td>
-                            <td>{{this.email}}</td>
-                            <td>{{this.product}}</td>
-                            <td>{{this.qty}}</td>
-                            <td>{{moment this.orderdate "LLL"}}</td>
+                            <td>{{this.name}}</td>
+                            <td>{{this.description}}</td>
+                            <td>{{this.url}}</td>
+                            <td>{{this.pic}}</td>
+                            <td class="td-actions text-right">
+                                <button type="button" rel="tooltip" title="Edit Blog" class="btn btn-primary btn-link btn-sm">
+                                <i class="material-icons">build</i>
+                                </button>
+                                
+                           </td>
                           </tr>
                         {{/each}}
                       </tbody>
@@ -52,6 +54,8 @@
           <!-- your content here -->
         </div>
       </div>
+
+
 
 
 

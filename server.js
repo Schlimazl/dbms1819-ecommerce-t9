@@ -6,7 +6,11 @@ const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const Product = require('./models/product');
 const Category = require('./models/category');
-// const moment = require('moment');
+const Handlebars = require('handlebars');
+const MomentHandler = require('handlebars.moment');
+
+MomentHandler.registerHelpers(Handlebars);
+require('dotenv').config();
 
 // moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
 
@@ -39,6 +43,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+
+
 // ------------------------ USER INTERFACE ------------------------------------------
 
 //  client.query('SELECT * FROM Products', (req, data) => {
@@ -47,18 +53,37 @@ app.use(bodyParser.json());
 //      list.push(data.rows[i]);
 //    }
 app.get('/', function (req, res) {
-  client.query('SELECT * FROM blog')
-  .then((results) =>{
-    console.log('results?', results);
-    res.render('client/home', {
-      rows: results.rows
+  var blog = [];
+  var stylist = [];
+  var both = [];
+    client.query('SELECT * FROM blog')
+    .then((results) =>{
+      blog = results.rows;
+      console.log('blog:', blog);
+      both.push(blog);
     })
-  .catch((err) => {
-    console.log('error', err);
-    res.send('Error!');
-    });
+    .catch((err) => {
+      console.log('error', err);
+      res.send('Error!');
+      });
+
+    client.query('SELECT * FROM stylist')
+    .then((results) =>{
+      stylist = results.rows;
+      console.log('stylist:', stylist);
+      both.push(stylist);
+      console.log(both);
+      res.render('client/home.handlebars', {
+        rows: both
+      });
+    })
+    .catch((err) => {
+      console.log('error', err);
+      res.send('Error!');
+      });
   });
-});
+
+
 
 app.get('/products', function (req, res) {
   Product.list(client, {}, function (products) {
@@ -269,6 +294,52 @@ app.get('/admin/brand/create', function (req, res) {
   });
 });
 
+//-----------------------STYLISTS-------------------------
+app.get('/admin/stylists', function (req, res) {
+  client.query('SELECT * FROM stylist')
+  .then((results) =>{
+    console.log('results?', results);
+    res.render('admin/stylists', {
+      rows: results.rows,
+      layout: 'cms'
+    })
+  .catch((err) => {
+    console.log('error', err);
+    res.send('Error!');
+    });
+  });
+});
+
+app.get('/admin/stylist/add', function (req, res) {
+  res.render('admin/add-stylist', {
+    title: 'Add stylist',
+    layout: 'cms'
+  });
+});
+
+//---------------------------BLOGS-------------------------
+app.get('/admin/blogs', function (req, res) {
+  client.query('SELECT * FROM blog')
+  .then((results) =>{
+    console.log('results?', results);
+    res.render('admin/blogs', {
+      rows: results.rows,
+      layout: 'cms'
+    })
+  .catch((err) => {
+    console.log('error', err);
+    res.send('Error!');
+    });
+  });
+});
+
+app.get('/admin/blog/add', function (req, res) {
+  res.render('admin/add-blog', {
+    title: 'Add blog',
+    layout: 'cms'
+  });
+});
+
 // ---------------------------ORDERS--------------------------------
 app.get('/admin/orders', function (req, res) {
   client.query('SELECT customers.first_name AS fname,customers.last_name AS lname,customers.email AS email,products.name AS product,orders.quantity AS qty,orders.order_date AS orderdate FROM orders INNER JOIN customers ON customers.id=orders.customers_id INNER JOIN products ON products.id=orders.products_id ORDER BY orderdate DESC;')
@@ -308,6 +379,28 @@ app.post('/insertcategory', function (req, res) {
   client.query("INSERT INTO products_category (name) VALUES ('" + req.body.name + "')")
     .then((result) => {
       res.redirect('/admin/categories');
+    })
+    .catch((err) => {
+      res.redirect('/admin/error');
+    // res.redirect('/admin/category/create');
+    });
+});
+
+app.post('/insertblog', function (req, res) {
+  client.query("INSERT INTO blog (name, description, url, pic) VALUES ('" + req.body.name + "', '" + req.body.description + "', '" + req.body.url + "', '" + req.body.pic + "')")
+    .then((result) => {
+      res.redirect('/admin/blogs');
+    })
+    .catch((err) => {
+      res.redirect('/admin/error');
+    // res.redirect('/admin/category/create');
+    });
+});
+
+app.post('/insertstylist', function (req, res) {
+  client.query("INSERT INTO stylist (name, description, pic, fb, ig) VALUES ('" + req.body.name + "', '" + req.body.description + "', '" + req.body.pic + "', '" + req.body.fb + "', '" + req.body.ig + "')")
+    .then((result) => {
+      res.redirect('/admin/stylists');
     })
     .catch((err) => {
       res.redirect('/admin/error');

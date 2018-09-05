@@ -2,7 +2,7 @@
       
       <div class="hero hero-slider">
         <ul class="slides">
-        	{{#each rows}}
+        	{{#each rows.[0]}}
           <li data-bg-image="{{this.pic}}">
             <div class="container">
               <h3 class="slider-subtitle">Featured Blog</h3>
@@ -24,28 +24,28 @@
               <div class="col-md-3">
                 <div class="feature">
                   <img src="images/icon-1.png" class="feature-image">
-                  <h3 class="feature-title">Voluptatem</h3>
+                  <h3 class="feature-title">Hair Colors</h3>
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur dolor perferendis blanditiis voluptate maiores </p>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="feature">
                   <img src="images/icon-2.png" class="feature-image">
-                  <h3 class="feature-title">COnsequatur</h3>
+                  <h3 class="feature-title">Consultation</h3>
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse, minus, totam. Officia ea accusamus quis tenetur quas </p>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="feature">
                   <img src="images/icon-3.png" class="feature-image">
-                  <h3 class="feature-title">Temporibus</h3>
+                  <h3 class="feature-title">Haircut</h3>
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste, omnis cum, quo dolorem molestias asperiores doloremque dolorum</p>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="feature">
                   <img src="images/icon-4.png" class="feature-image">
-                  <h3 class="feature-title">Perferendis</h3>
+                  <h3 class="feature-title">Make-up</h3>
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, facere numquam porro amet reiciendis maiores odio velit</p>
                 </div>
               </div>
@@ -56,56 +56,24 @@
         <div class="fullwidth-block team-section">
           <div class="container">
             <h2 class="section-title">Our team</h2>
+           {{#each rows.[1]}}
             <div class="row">
               <div class="col-md-3">
                 <div class="team">
-                  <figure class="team-image"><img src="dummy/1.jpeg"></figure>
-                  <h3 class="team-name">Sarah james</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio nihil distinctio natus doloremque id tempore repellendus atque</p>
+                  <figure class="team-image"><img src="{{this.pic}}"></figure>
+                  <h3 class="team-name">{{this.name}}</h3>
+                  <p>{{this.description}}</p>
                   <div class="social-links">
-                    <a href="#"><i class="fa fa-facebook"></i></a>
-                    <a href="#"><i class="fa fa-twitter"></i></a>
-                    <a href="#"><i class="fa fa-google-plus"></i></a>
+                    <a href="{{this.fb}}"><i class="fa fa-facebook"></i></a>
+                    <a href="{{this.ig}}"><i class="fa fa-instagram"></i></a>
                   </div>
                 </div>
               </div>
-              <div class="col-md-3">
-                <div class="team">
-                  <figure class="team-image"><img src="dummy/2.jpeg"></figure>
-                  <h3 class="team-name">Marta Smith</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta iste natus voluptatum eius? Vitae accusantium, deserunt maiores incidunt</p>
-                  <div class="social-links">
-                    <a href="#"><i class="fa fa-facebook"></i></a>
-                    <a href="#"><i class="fa fa-twitter"></i></a>
-                    <a href="#"><i class="fa fa-google-plus"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="team">
-                  <figure class="team-image"><img src="dummy/3.jpeg"></figure>
-                  <h3 class="team-name">Nicole Johnson</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur aut, laboriosam iure, quisquam reiciendis voluptas.</p>
-                  <div class="social-links">
-                    <a href="#"><i class="fa fa-facebook"></i></a>
-                    <a href="#"><i class="fa fa-twitter"></i></a>
-                    <a href="#"><i class="fa fa-google-plus"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="team">
-                  <figure class="team-image"><img src="dummy/4.jpeg"></figure>
-                  <h3 class="team-name">Alicia Brown</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla itaque veritatis amet unde aliquid, non tenetur doloremque</p>
-                  <div class="social-links">
-                    <a href="#"><i class="fa fa-facebook"></i></a>
-                    <a href="#"><i class="fa fa-twitter"></i></a>
-                    <a href="#"><i class="fa fa-google-plus"></i></a>
-                  </div>
-                </div>
-              </div>
+              {{/each}}
+             </div>
+            
             </div> <!-- .row -->
+            
           </div> <!-- .container -->
         </div> <!-- .fullwidth-block.team-section -->
 
