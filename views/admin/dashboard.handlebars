@@ -1,0 +1,153 @@
+<div class="row">
+<div class="col-lg-4 col-md-12">
+              <div class="card card-stats">
+                <div class="card-header card-header-primary card-header-icon">
+                  <div class="card-icon">
+                    <i class="material-icons">monetization_on</i>
+                  </div>
+                  <p class="card-category">Revenue</p>
+                  <h3 class="card-title">Php {{totalsales7days}}</h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">date_range</i> Last 7 days
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+              <div class="card card-stats">
+                <div class="card-header card-header-primary card-header-icon">
+                  <div class="card-icon">
+                    <i class="material-icons">monetization_on</i>
+                  </div>
+                  <p class="card-category">Revenue</p>
+                  <h3 class="card-title">Php {{totalsales30days}}</h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">date_range</i> Last 30 days
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+              <div class="card card-stats">
+                <div class="card-header card-header-primary card-header-icon">
+                  <div class="card-icon">
+                    <i class="material-icons">store</i>
+                  </div>
+                  <p class="card-category">Order Count</p>
+                  <h3 class="card-title">{{dailyordercount}}</h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">date_range</i> Last 24 Hours
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+<div class="row">
+            <div class="col-lg-6 col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">TOP 10</h4>
+                  <p class="card-category">Customers with highest number of orders</p>
+                </div>
+                <div class="card-body table-responsive">
+                  <table class="table table-hover">
+                    <thead class="text-primary">
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>No. of Orders</th>
+                    </thead>
+                    <tbody>
+                      {{#each top10CustomerOrder}}
+                      <tr>
+                        <td>{{this.first_name}} </td>
+                        <td>{{this.last_name}} </td>
+                        <td>{{this.count}}</td>
+                      </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+ <div class="col-lg-6 col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">TOP 10</h4>
+                  <p class="card-category">Customers with highest payment</p>
+                </div>
+                <div class="card-body table-responsive">
+                  <table class="table table-hover">
+                    <thead class="text-primary">
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Payments</th>
+                    </thead>
+                    <tbody>
+                      {{#each top10CustomerHighestPayment}}
+                      <tr>
+                        <td>{{this.first_name}}</td>
+                        <td>{{this.last_name}}</td>
+                        <td>{{this.sum}}</td>
+                      </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>
+</div>
+</div>
+</div>
+</div>
+
+<div class="row">
+            <div class="col-lg-6 col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">TOP 10</h4>
+                  <p class="card-category">Most ordered products</p>
+                </div>
+                <div class="card-body table-responsive">
+                  <table class="table table-hover">
+                    <thead class="text-primary">
+                      <th>Name</th>
+                      <th>No. of Orders</th>
+                    </thead>
+                    <tbody>
+                      {{#each top10MostOrderedProducts}}
+                      <tr>
+                        <td>{{this.name}} </td>
+                        <td>{{this.count}}</td>
+                      </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+ <div class="col-lg-6 col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">TOP 10</h4>
+                  <p class="card-category">Least ordered products</p>
+                </div>
+                <div class="card-body table-responsive">
+                  <table class="table table-hover">
+                    <thead class="text-primary">
+                      <th>Name</th>
+                      <th>No. of Orders</th>
+                    </thead>
+                    <tbody>
+                      {{#each top10LeastOrderedProducts}}
+                      <tr>
+                        <td>{{this.name}} </td>
+                        <td>{{this.count}}</td>
+                      </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>
+</div>
+</div>

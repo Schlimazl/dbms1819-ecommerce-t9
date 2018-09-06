@@ -1,3 +1,5 @@
+var exports = module.exports = {};
+
 var Product = {
   getById: (client, productId, callback) => {
     const productQuery = `SELECT products_category.name AS categoryname,
@@ -29,6 +31,23 @@ var Product = {
       callback(productData);
     })
   },
+create: (client,productData,callback) => {
+      var productData = [
+      productData.product_name,
+      productData.product_desc,
+      productData.product_price,
+      productData.product_category,
+      productData.product_brand,
+      productData.product_pic
+      ];
+      const productInsertQuery =  `
+       INSERT INTO products (name,descriptions,price,category_id,brand_id,pic)
+       VALUES ($1,$2,$3,$4,$5,$6)
+      `;
+      client.query(productInsertQuery,productData)
+      .then(res => callback('SUCCESS'))
+      .catch(e => callback('ERROR'))
+    },
 
   list: (client, filter, callback) => {
     const productListQuery = `SELECT * FROM Products`;
