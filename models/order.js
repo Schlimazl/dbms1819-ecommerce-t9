@@ -100,5 +100,36 @@ var Order = {
         callback(result.rows)
       });
     },
+    top3OrderedBrands: (client,filter,callback) =>{
+      const query = `
+        SELECT DISTINCT products_brand.name,
+        SUM (orders.quantity)
+        FROM orders
+         INNER JOIN products ON products.id = orders.products_id
+         INNER JOIN products_brand ON products_brand.id = products.brand_id
+        GROUP BY products_brand.name 
+        ORDER BY SUM DESC limit 3
+      `;
+      client.query(query,(req,result)=>{
+        console.log(result.rows)
+        callback(result.rows)
+      });
+    },
+    top3OrderedCategories: (client,filter,callback) => {
+      const query =  `
+         SELECT DISTINCT products_category.name,
+         SUM (orders.quantity)
+         FROM orders
+         INNER JOIN products ON products.id = orders.products_id
+         INNER JOIN products_category ON products_category.id = products.category_id
+         GROUP BY products_category.name 
+         ORDER BY SUM DESC limit 3
+ 
+      `;
+      client.query(query,(req,result)=>{
+        console.log(result.rows)
+        callback(result.rows)
+      });
+    },
 }
 module.exports = Order;

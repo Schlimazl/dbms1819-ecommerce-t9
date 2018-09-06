@@ -104,6 +104,8 @@ app.get('/admin/', function (req, res) {
   var top10CustomerHighestPayment;
   var top10MostOrderedProducts;
   var top10LeastOrderedProducts;
+  var top3OrderedBrands;
+  var top3OrderedCategories;
   var totalSales7days;
   var totalSales30days;
   var dailyOrderCount;
@@ -121,18 +123,27 @@ Order.top10LeastOrderedProducts(client,{},function(result){
 Order.totalSales30Days(client,{},function(result){
   totalSales30days = result
 });
-Order.dailyOrderCount(client,{},function(result){
-  dailyOrderCount = result
-});
 Order.totalSales7Days(client,{},function(result){
   totalSales7days = result
 });
+Order.dailyOrderCount(client,{},function(result){
+  dailyOrderCount = result
+});
+Order.top3OrderedBrands(client,{},function(result){
+  top3OrderedBrands = result
+});
+Order.top3OrderedCategories(client,{},function(result){
+  top3OrderedCategories = result
+});
+
 
 Customer.top10CustomerHighestPayment(client,{},function(result){
       res.render('admin/dashboard', {
         top10CustomerOrder: top10CustomerOrder,
         top10LeastOrderedProducts: top10LeastOrderedProducts,
         top10MostOrderedProducts: top10MostOrderedProducts,
+        top3OrderedCategories: top3OrderedCategories,
+        top3OrderedBrands: top3OrderedBrands,
         totalsales30days : totalSales30days[0].total,
         totalsales7days : totalSales7days[0].total,
         dailyordercount : dailyOrderCount[0].count,
