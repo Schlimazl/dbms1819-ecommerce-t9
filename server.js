@@ -81,7 +81,19 @@ app.get('/', function (req, res) {
       });
   });
 
+app.get('/login', function (req, res) {
+    res.render('client/login', {
+      title: 'Top Products',
+      products: products
+    });
+  });
 
+app.get('/signup', function (req, res) {
+    res.render('client/signup', {
+      title: 'Top Products',
+      products: products
+    });
+  });
 
 app.get('/products', function (req, res) {
   Product.list(client, {}, function (products) {
