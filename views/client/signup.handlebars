@@ -1,35 +1,79 @@
-<body class="login">
-  <div>
-    <div class="login_wrapper">
-      <div class="animate form login_form">
-        <section class="login_content">
-          <form class="form-horizontal form-label-left" novalidate>
-            <h1>The Bloc by Junie Sierra</h1>
-            <div>
-              <input type="text" class="form-control" placeholder="Username" required="required" id="uname" />
+<div id="site-content">
+      <header class="site-header-test">
+        <div class="container">
+          <a id="branding" href="/../../">
+            <img src="/images/test.png" alt="Company name" class="logo">
+            
+          </a> <!-- #branding -->
+          
+          <!-- Default snippet for navigation -->
+          <div class="main-navigation">
+            <button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
+            <ul class="menu">
+              <li class="menu-item current-menu-item"><a href="/">Home</a></li>
+              <li class="menu-item"><a href="/products">Products</a></li>
+              <li class="menu-item"><a href="about.html">About</a></li>
+              <li class="menu-item"><a href="service.html">Services</a></li>
+              <li class="menu-item"><a href="gallery.html">Gallery</a></li>
+              <li class="menu-item"><a href="contact.html">Contact</a></li>
+            </ul> <!-- .menu -->
+          </div> <!-- .main-navigation -->
+          <div class="mobile-navigation"></div>
+        </div>
+      </header>
+
+<div class="container-fluid">
+    <div class="team">
+      <h2 class="team-name text-center">SIGN-UP</h2><hr>
+        <form method="post" action="/signup">
+            <h3 class="team-name">First Name</h3>
+            <div class="form-group">
+              <input type="text" style= "margin: auto; color:white" class="form-control" id="first_name" placeholder="First Name" name="first_name" required>
             </div>
-            <div>
-              <input type="password" class="form-control" placeholder="Password" required="required" id="pwd"/>
+            <h3 class="team-name">First Name</h3>
+            <div class="form-group">
+              <input type="text" style= "margin: auto; color:white" class="form-control" id="last_name" placeholder="Last Name" name="last_name" required>
             </div>
-            <div>
-              <a class="btn btn-default submit" id="send">Log in</a>
+            <h3 class="team-name">Email</h3>
+            <div class="form-group">
+              <input type="email" style= "margin: auto; color:white" class="form-control" id="email" placeholder="Email" name="email" required>
+            </div>
+            <h3 class="team-name">Password</h3>
+            <div class="form-group">
+              <input type="password" style= "margin: auto; color:white" class="form-control" id="name" placeholder="Password" name="password" required>
+            </div>
+            <h3 class="team-name">House Number</h3>
+            <div class="form-group">
+              <input type="text" style= "margin: auto; color:white" class="form-control" id="house_number" placeholder="House Number" name="house_number" required>
+            </div>
+            <h3 class="team-name">Street</h3>
+            <div class="form-group">
+              <input type="text" style= "margin: auto; color:white" class="form-control" id="street" placeholder="Street" name="street" required>
+            </div>
+            <h3 class="team-name">Barangay</h3>
+            <div class="form-group">
+              <input type="text" style= "margin: auto; color:white" class="form-control" id="barangay" placeholder="Barangay" name="barangay" required>
+            </div>
+            <h3 class="team-name">City</h3>
+            <div class="form-group">
+              <input type="text" style= "margin: auto; color:white" class="form-control" id="city" placeholder="City" name="city" required>
+            </div>
+            <h3 class="team-name">Country</h3>
+            <div class="form-group">
+              <input type="text" style= "margin: auto; color:white" class="form-control" id="country" placeholder="Country" name="country" required>
             </div>
 
-            <div class="clearfix"></div>
-            <br />
-
-            <div class="separator">
-
-              <div class="clearfix"></div>
-
-              <div>
-                <h1>The Bloc by Junie Sierra</h1>
-                <p>©2018 All Rights Reserved. Privacy and Terms</p>
-              </div>
+            <h6 style="text-align: auto">
+              <a href="forgotpassword"> Forgot Password?</a>
+            </h6>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success"><i class="fas fa-paper-plane" style="font-size:15px"></i> SIGN-UP!</button>
             </div>
-          </form>
-        </section>
+        </form>
       </div>
-    </div>
+    </main>
   </div>
-</body>
+</div>
+</div>
+
+{{> footer}}

@@ -16,14 +16,18 @@
     ]
   },
   "dependencies": {
+    "bcrypt": "^3.0.1",
     "dotenv": "^6.0.0",
     "express": "*",
     "express-handlebars": "*",
     "express-layout": "^0.1.0",
+    "express-session": "^1.15.6",
     "handlebars.moment": "^1.0.4",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.21",
     "nodemailer": "^4.6.7",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "pg": "^7.4.3"
   },
   "author": "Kirk Grospe",

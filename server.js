@@ -12,6 +12,12 @@ const Customer = require('./models/customer');
 const Email = require('./utils/email');
 const Handlebars = require('handlebars');
 const MomentHandler = require('handlebars.moment');
+const passport = require('passport');
+const Strategy = require('passport-local').Strategy;
+const session = require('express-session');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 
 MomentHandler.registerHelpers(Handlebars);
 require('dotenv').config();
@@ -47,6 +53,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+var role;
+app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }));
+
+// Initialize Passport and restore authentication state, if any, from the
+// session.
+app.use(passport.initialize()); 
+app.use(passport.session());
+
 
 
 // ------------------------ USER INTERFACE ------------------------------------------
@@ -81,19 +95,72 @@ app.get('/', function (req, res) {
       });
   });
 
+
+passport.use(new Strategy({
+  usernameField: 'email',
+  passwordField: 'password'
+},
+  function(email, password, cb) {
+    Customer.getByEmail(client, email, function(user) {
+      if (!user) { return cb(null, false); }
+      if (user.password != password) { return cb(null, false); }
+      return cb(null, user);
+    });
+  }));
+
+passport.serializeUser(function(user, cb) {
+  console.log('serializeUser', user)
+  cb(null, user.id);
+});
+
+passport.deserializeUser(function(id, cb) {
+  console.log('deserializeUser', id)
+  Customer.getById(client, id, function (user) {
+    cb(null, user);
+  });
+});
+
+function isAdmin(req, res, next) {
+   if (req.isAuthenticated()) {
+  Customer.getCustomerData(client,{id: req.user.id},function(user){
+    role = user[0].user_type;
+    console.log('role:',role);
+    if (role == 'admin') {
+        return next();
+    }
+    else{
+      res.redirect('/products');
+    }
+  });
+  }
+  else{
+    res.redirect('/login');
+  }
+}
+
+
 app.get('/login', function (req, res) {
     res.render('client/login', {
       title: 'Top Products',
-      products: products
     });
   });
+
+
+
+app.post('/login', 
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  function(req, res) {
+  res.redirect('/admin');
+});
 
 app.get('/signup', function (req, res) {
     res.render('client/signup', {
       title: 'Top Products',
-      products: products
     });
   });
+
+
+
 
 app.get('/products', function (req, res) {
   Product.list(client, {}, function (products) {
@@ -104,14 +171,28 @@ app.get('/products', function (req, res) {
   });
 });
 
-app.get('/products/:id', (req, res) => {
-  Product.getById(client, req.params.id, function (productData) {
-    res.render('client/products', productData);
+app.get('/error', function (req, res) {
+  res.render('client/error', {
+    title: 'Error',
+    layout: 'cms'
   });
 });
 
+
+app.get('/products/:id', (req, res) => {
+  if(req.isAuthenticated()){
+  Product.getById(client, req.params.id, function (productData) {
+    res.render('client/products', productData);
+  });
+}
+  else{
+    res.redirect('/login');
+  }
+  });
+
+
 // ------------------------ CONTENT MANAGEMENT SYSTEM ------------------------------------------
-app.get('/admin/', function (req, res) {
+app.get('/admin/', isAdmin, function (req, res) {
   var top10CustomerOrder;
   var top10CustomerHighestPayment;
   var top10MostOrderedProducts;
@@ -169,7 +250,7 @@ Customer.top10CustomerHighestPayment(client,{},function(result){
 
 
 // ------------------------PRODUCTS---------------------------------------------
-app.get('/admin/products', (req, res) => {
+app.get('/admin/products', isAdmin, (req, res) => {
   client.query('select products_category.name AS categoryname,products.price AS price,products.id AS id, products.name AS productname,products.pic AS pic,products.descriptions AS desc,products_brand.name AS productbrand FROM products INNER JOIN products_category ON products_category.id = products.category_id INNER JOIN products_brand ON products_brand.id = products.brand_id')
     .then((results) => {
       console.log('results?', results);
@@ -185,7 +266,7 @@ app.get('/admin/products', (req, res) => {
     });
 });
 
-app.get('/admin/products/:id', (req, res) => {
+app.get('/admin/products/:id', isAdmin, (req, res) => {
   Product.getById(client, req.params.id, function (productData) {
     res.render('admin/products-details-admin', {
       title: 'Customers',
@@ -196,7 +277,7 @@ app.get('/admin/products/:id', (req, res) => {
 });
 
 
-app.get('/admin/product/update/:id', function (req, res) {
+app.get('/admin/product/update/:id', isAdmin, function (req, res) {
   var category = [];
   var brand = [];
   var both = [];
@@ -236,7 +317,7 @@ app.get('/admin/product/update/:id', function (req, res) {
     });
 });
 
-app.get('/admin/product/create', function (req, res) {
+app.get('/admin/product/create', isAdmin, function (req, res) {
   var category = [];
   var brand = [];
   var both = [];
@@ -268,7 +349,7 @@ app.get('/admin/product/create', function (req, res) {
     });
 });
 // ------------------------ CUSTOMERS ------------------------------------------
-app.get('/admin/customers', function (req, res) {
+app.get('/admin/customers', isAdmin, function (req, res) {
   client.query('SELECT * FROM customers ORDER BY id DESC')
     .then((results) => {
       res.render('admin/customers-admin', {
@@ -283,7 +364,7 @@ app.get('/admin/customers', function (req, res) {
     });
 });
 
-app.get('/customers/:id', (req, res) => {
+app.get('/customers/:id', isAdmin, (req, res) => {
   client.query('select customers.first_name AS fname, customers.last_name AS lname, customers.email AS email, customers.house_number AS hnumber, customers.street AS street, customers.barangay AS brgy, customers.city AS city, customers.country AS country, products.name AS pname, orders.quantity AS qty,orders.order_date AS orderdate FROM orders INNER JOIN products ON products.id = orders.products_id  INNER JOIN customers ON customers.id = orders.customers_id WHERE customers.id = ' + req.params.id + ' ORDER BY order_date DESC')
     .then((results) => {
       console.log('results?', results);
@@ -299,7 +380,7 @@ app.get('/customers/:id', (req, res) => {
     });
 });
 // -------------------------CATEGORIES------------------------
-app.get('/admin/categories', function (req, res) {
+app.get('/admin/categories', isAdmin, function (req, res) {
   Category.list(client, {}, function (category) {
     res.render('admin/category-admin', {
       title: 'Categories',
@@ -309,7 +390,7 @@ app.get('/admin/categories', function (req, res) {
   });
 });
 
-app.get('/admin/category/create', function (req, res) {
+app.get('/admin/category/create', isAdmin, function (req, res) {
   res.render('admin/create-category', {
     title: 'Create Category',
     layout: 'cms'
@@ -317,7 +398,7 @@ app.get('/admin/category/create', function (req, res) {
 });
 
 // ---------------------------BRANDS------------------------
-app.get('/admin/brands', function (req, res) {
+app.get('/admin/brands', isAdmin, function (req, res) {
 Brand.list(client,{},function(brands){
       res.render('admin/brand-admin', {
         brands: brands,
@@ -329,7 +410,7 @@ Brand.list(client,{},function(brands){
 
 
 
-app.get('/admin/brand/create', function (req, res) {
+app.get('/admin/brand/create',  isAdmin, function (req, res) {
   res.render('admin/create-brand', {
     title: 'Create Brand',
     layout: 'cms'
@@ -337,7 +418,7 @@ app.get('/admin/brand/create', function (req, res) {
 });
 
 //-----------------------STYLISTS-------------------------
-app.get('/admin/stylists', function (req, res) {
+app.get('/admin/stylists',  isAdmin, function (req, res) {
   client.query('SELECT * FROM stylist')
   .then((results) =>{
     console.log('results?', results);
@@ -352,7 +433,7 @@ app.get('/admin/stylists', function (req, res) {
   });
 });
 
-app.get('/admin/stylist/add', function (req, res) {
+app.get('/admin/stylist/add',  isAdmin, function (req, res) {
   res.render('admin/add-stylist', {
     title: 'Add stylist',
     layout: 'cms'
@@ -360,7 +441,7 @@ app.get('/admin/stylist/add', function (req, res) {
 });
 
 //---------------------------BLOGS-------------------------
-app.get('/admin/blogs', function (req, res) {
+app.get('/admin/blogs', isAdmin, function (req, res) {
   client.query('SELECT * FROM blog')
   .then((results) =>{
     console.log('results?', results);
@@ -375,7 +456,7 @@ app.get('/admin/blogs', function (req, res) {
   });
 });
 
-app.get('/admin/blog/add', function (req, res) {
+app.get('/admin/blog/add', isAdmin, function (req, res) {
   res.render('admin/add-blog', {
     title: 'Add blog',
     layout: 'cms'
@@ -383,7 +464,7 @@ app.get('/admin/blog/add', function (req, res) {
 });
 
 // ---------------------------ORDERS--------------------------------
-app.get('/admin/orders', function (req, res) {
+app.get('/admin/orders', isAdmin, function (req, res) {
    Order.list(client,{},function(orders){
     res.render('admin/orders',{
       orders: orders,
@@ -392,7 +473,7 @@ app.get('/admin/orders', function (req, res) {
     });
 });
 
-app.get('/admin/error', function (req, res) {
+app.get('/admin/error', isAdmin, function (req, res) {
   res.render('admin/error-admin', {
     title: 'Error',
     layout: 'cms'
@@ -445,6 +526,30 @@ app.post('/insertstylist', function (req, res) {
     // res.redirect('/admin/category/create');
     });
 });
+
+app.post('/signup', function (req, res) {
+    Customer.signup(client,{
+    fName: req.body.first_name,
+    lName: req.body.last_name,
+    email: req.body.email,
+    pass: req.body.password,
+    hNumber: req.body.house_number,
+    street: req.body.street,
+    brgy: req.body.barangay,
+    city: req.body.city,
+    country: req.body.country,
+  },
+  function(user){
+
+    if(user == 'SUCCESS'){
+      res.redirect('/login');
+}
+    else if (user == 'ERROR'){
+      console.log('Error!')
+    }
+  });
+});
+
 
 app.post('/insertproduct', function (req, res) {
    Product.create(client,{
