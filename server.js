@@ -103,10 +103,13 @@ passport.use(new Strategy({
   function(email, password, cb) {
     Customer.getByEmail(client, email, function(user) {
       if (!user) { return cb(null, false); }
-      if (user.password != password) { return cb(null, false); }
+      bcrypt.compare(password, user.password).then(function(res) {
+      if (res == false) { return cb(null, false); }
       return cb(null, user);
     });
+      });
   }));
+
 
 passport.serializeUser(function(user, cb) {
   console.log('serializeUser', user)
@@ -528,16 +531,18 @@ app.post('/insertstylist', function (req, res) {
 });
 
 app.post('/signup', function (req, res) {
+  bcrypt.hash(req.body.password, saltRounds).then(function(hash) {
     Customer.signup(client,{
     fName: req.body.first_name,
     lName: req.body.last_name,
     email: req.body.email,
-    pass: req.body.password,
+    pass: hash,
     hNumber: req.body.house_number,
     street: req.body.street,
     brgy: req.body.barangay,
     city: req.body.city,
     country: req.body.country,
+    userType: 'user'
   },
   function(user){
 
@@ -548,6 +553,7 @@ app.post('/signup', function (req, res) {
       console.log('Error!')
     }
   });
+});
 });
 
 
