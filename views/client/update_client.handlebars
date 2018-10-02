@@ -1,0 +1,101 @@
+<div id="site-content">
+      <header class="site-header-test">
+        <div class="container">
+          <a id="branding" href="/../../">
+            <img src="/images/test.png" alt="Company name" class="logo">
+            
+          </a> <!-- #branding -->
+
+          
+          <!-- Default snippet for navigation -->
+          <div class="main-navigation">
+            <button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
+            <ul class="menu">
+              <li class="menu-item current-menu-item"><a href="/">Home</a></li>
+              <li class="menu-item"><a href="/products?p=1">Products</a></li>
+              <li class="menu-item"><a href="/services">Services</a></li>
+              <li class="menu-item"><a href="/aboutus">About</a></li>
+              <li class="menu-item"><a href="/faqs">FAQs</a></li>
+              <li class="menu-item"><a href="/login">Log-in</a></li>
+            </ul> <!-- .menu -->
+          </div> <!-- .main-navigation -->
+
+          <div class="mobile-navigation"></div>
+        </div>
+      </header>
+
+<div class="container-fluid">
+    <div class="team">
+      <h2 class="team-name text-center">UPDATE INFORMATION</h2><hr>
+        <form method="post" action="/client/update">
+{{#each user}}
+        <div class="form-group">
+          <label class="control-label team-name" for="first_name">First Name: </label>
+          <div style="margin-bottom: 20px">
+            <input id="first_name" style= "margin: auto; color:white" value="{{first_name}}" name="first_name" type="text" placeholder="First Name" class="form-control" required="">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label team-name" for="last_name">Last Name: </label>
+          <div style="margin-bottom: 20px">
+            <input id="last_name" style= "margin: auto; color:white" value="{{last_name}}" name="last_name" type="text" placeholder="Last Name" class="form-control" required="">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label team-name" for="email">Email: </label>
+          <div style="margin-bottom: 20px">
+            <input id="email" style= "margin: auto; color:white" value="{{email}}"  name="email" type="text" placeholder="Email" class="form-control" required="">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label team-name" for="email">Password: </label>
+          <div style="margin-bottom: 20px">
+            <input id="password" style= "margin: auto; color:white"   name="password" type="password" placeholder="Enter password" class="form-control" required="">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label team-name" for="house_number">House Number: </label>
+          <div style="margin-bottom: 20px">
+            <input id="house_number" style= "margin: auto; color:white" value="{{house_number}}" name="house_number" type="text" placeholder="House Number" class="form-control" required="">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label team-name" for="street">Street: </label>
+          <div style="margin-bottom: 20px">
+            <input id="street" style= "margin: auto; color:white" value="{{street}}" name="street" type="text" placeholder="Street" class="form-control" required="">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label team-name" for="barangay">Barangay: </label>
+          <div style="margin-bottom: 20px">
+            <input id="barangay" style= "margin: auto; color:white" value="{{barangay}}" name="barangay" type="text" placeholder="Barangay" class="form-control" required="">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label team-name" for="city">City: </label>
+          <div style="margin-bottom: 20px">
+            <input id="city" style= "margin: auto; color:white" value="{{city}}" name="city" type="text" placeholder="City" class="form-control" required="">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label team-name" for="country">Country: </label>
+          <div style="margin-bottom: 20px">
+            <input id="country" style= "margin: auto; color:white" value="{{country}}" name="country" type="text" placeholder="Country" class="form-control" required="">
+          </div>
+        </div>
+{{/each}}
+        <div class="form-group">
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg" title="Submit contact form">
+            Submit
+            </button>
+          </div>
+        </div>
+      </div>
+        </form>
+      </div>
+  </div>
+</div>
+</div>
+
+{{> footer}}

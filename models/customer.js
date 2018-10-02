@@ -46,6 +46,21 @@ var Customer = {
         callback(result.rows[0]);
       });
     },
+
+      update: (client,customerId,customerData,callback) => {
+      const query =  `
+        UPDATE
+          customers
+        SET
+          email = '${customerData.email}', first_name = '${customerData.fName}', last_name = '${customerData.lName}', house_number = '${customerData.hNumber}', street = '${customerData.street}', barangay = '${customerData.brgy}', city = '${customerData.city}', country = '${customerData.country}', password = '${customerData.pass}'
+        WHERE id = '${customerId.id}'
+      `;
+      client.query(query,(req,result)=>{
+      //  console.log(result.rows)
+        callback(result)
+      });
+    },
+
     signup: (client,customersData,callback) => {
     var customersData = [
       customersData.fName,
@@ -57,10 +72,11 @@ var Customer = {
       customersData.brgy,
       customersData.city,
       customersData.country,
+      customersData.user_type
       ];
     const query =  `
-     INSERT INTO customers (first_name, last_name, email, password, house_number, street, barangay, city, country) 
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+     INSERT INTO customers (first_name, last_name, email, password, house_number, street, barangay, city, country, user_type) 
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
     `;
     client.query(query,customersData)
     .then(res => callback('SUCCESS'))

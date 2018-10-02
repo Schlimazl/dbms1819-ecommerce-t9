@@ -5,109 +5,116 @@
             <img src="/images/test.png" alt="Company name" class="logo">
             
           </a> <!-- #branding -->
+
           
           <!-- Default snippet for navigation -->
           <div class="main-navigation">
             <button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
             <ul class="menu">
               <li class="menu-item current-menu-item"><a href="/">Home</a></li>
-              <li class="menu-item"><a href="/products">Products</a></li>
-              <li class="menu-item"><a href="about.html">About</a></li>
-              <li class="menu-item"><a href="service.html">Services</a></li>
-              <li class="menu-item"><a href="gallery.html">Gallery</a></li>
-              <li class="menu-item"><a href="contact.html">Contact</a></li>
+              <li class="menu-item"><a href="/products?p=1">Products</a></li>
+              <li class="menu-item"><a href="/services">Services</a></li>
+              <li class="menu-item"><a href="/aboutus">About</a></li>
+              <li class="menu-item"><a href="/faqs">FAQs</a></li>
+              <li class="menu-item"><a href="/login">Log-in</a></li>
             </ul> <!-- .menu -->
           </div> <!-- .main-navigation -->
+
           <div class="mobile-navigation"></div>
         </div>
       </header>
-
+      
 <main class="main-content">	
 					<div class="container">
-		<h1 class="mt-3 text-center" style="color:lightgray">{{product_name}}</h1>
-			<div class="col-lg-8 col-md-8 col-sm-8 mb-0 mx-auto">
-				<div class="card bg-secondary text-light center">
-					<img class="card-img-top" src="{{pic}}" alt="">
-					<div class="card-body">
-						<h4 class="card-title">Brand: {{product_brand}}</h4>
-							<h5 class="card-title">₱ {{price}}.00</h5>
-						<p class="card-text">
-							<h7 class="card-title">{{category_name}}</h7>
-						</p>
-							<h7 class="card-title">{{desc}}</h7>
+							<div class="fullwidth-block team-section">
+							   <div class="container">
+							   	{{#each product}}
+							               <div class="team">
+							                  <figure class="team-image"><img src="{{pic}}"></figure>
+							                  <h1 class="team-name text-center">{{productname}}</h1>
+							                  <h1 class="team-name">PHP: {{price}}</h1>
+							                  <h1 class="team-name">BRAND: {{productbrand}}</h1>
+							                  <h1 class="team-name">CATEGORY: {{categoryname}}</h1>
+							                  {{desc}}
+							                </div>
+							    
+									</div>
+							</div>
 					</div>
-	</div>
-				</div>
-			</div>
+			 				</main>
 
-		<div class="container pb-5 mb-5">
-	<div class="jumbotron mt-2">
-		<h2>Order Form</h2>
-		<form method="POST" action="/products/{{id}}/send">
+<div class="container-fluid">
+    <div class="team">
+      <h2 class="team-name text-center">ORDER FORM</h2><hr>
+        <form method="post" action="/products/{{id}}/send">
+<div class="controls">
+							<input type = "hidden" name="productname" type="text" value="{{productname}}">
+														<div class="form-group">
+					<label class="control-label team-name" for="productid">Product ID: </label>
+					<div style="margin-bottom: 20px">
+						<input id="productid" style= "margin: auto; color:white" name="productid" type="text" value="{{id}}" class="form-control" required="" readonly="">
+					</div>
+				</div>
+						{{/each}}
+				<div class="form-group">
 
-			<div class="controls">
+					<label class="control-label team-name" for="quantity">Quantity: </label>
+					<div style="margin-bottom: 20px">
+						<input id="quantity" style= "margin: auto; color:white" name="quantity" type="number" placeholder="Enter Quantity" class="form-control" required="">
+
+					</div>
+					
+					{{#each customer}}
+				</div>
 				<div class="form-group">
-					<label class="control-label" for="quantity">Quantity: </label>
-					<div>
-						<input id="quantity" name="quantity" type="number" placeholder="1" class="form-control" required="">
-						<input type = "hidden" name="productname" type="text" value="{{productname}}">
+					<label class="control-label team-name" for="first_name">First Name: </label>
+					<div style="margin-bottom: 20px">
+						<input id="first_name" style= "margin: auto; color:white" value="{{first_name}}" name="first_name" type="text" placeholder="First Name" class="form-control" required="">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label" for="first_name">First Name: </label>
-					<div>
-						<input id="first_name" name="first_name" type="text" placeholder="Reina Patricia" class="form-control" required="">
+					<label class="control-label team-name" for="last_name">Last Name: </label>
+					<div style="margin-bottom: 20px">
+						<input id="last_name" style= "margin: auto; color:white" value="{{last_name}}" name="last_name" type="text" placeholder="Last Name" class="form-control" required="">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label" for="last_name">Last Name: </label>
-					<div>
-						<input id="last_name" name="last_name" type="text" placeholder="Sun" class="form-control" required="">
+					<label class="control-label team-name" for="email">Email: </label>
+					<div style="margin-bottom: 20px">
+						<input id="email" style= "margin: auto; color:white" value="{{email}}"  name="email" type="text" placeholder="Email" class="form-control" required="">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label" for="email">Email: </label>
-					<div>
-						<input id="email" name="email" type="text" placeholder="reinapatriciasun@gmail.com" class="form-control" required="">
+					<label class="control-label team-name" for="house_number">House Number: </label>
+					<div style="margin-bottom: 20px">
+						<input id="house_number" style= "margin: auto; color:white" value="{{house_number}}" name="house_number" type="text" placeholder="House Number" class="form-control" required="">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label" for="house_number">House Number: </label>
-					<div>
-						<input id="house_number" name="house_number" type="text" placeholder="2558" class="form-control" required="">
+					<label class="control-label team-name" for="street">Street: </label>
+					<div style="margin-bottom: 20px">
+						<input id="street" style= "margin: auto; color:white" value="{{street}}" name="street" type="text" placeholder="Street" class="form-control" required="">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label" for="street">Street: </label>
-					<div>
-						<input id="street" name="street" type="text" placeholder="Cabanillas St." class="form-control" required="">
+					<label class="control-label team-name" for="barangay">Barangay: </label>
+					<div style="margin-bottom: 20px">
+						<input id="barangay" style= "margin: auto; color:white" value="{{barangay}}" name="barangay" type="text" placeholder="Barangay" class="form-control" required="">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label" for="barangay">Barangay: </label>
-					<div>
-						<input id="barangay" name="barangay" type="text" placeholder="La Paz" class="form-control" required="">
+					<label class="control-label team-name" for="city">City: </label>
+					<div style="margin-bottom: 20px">
+						<input id="city" style= "margin: auto; color:white" value="{{city}}" name="city" type="text" placeholder="City" class="form-control" required="">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label" for="city">City: </label>
-					<div>
-						<input id="city" name="city" type="text" placeholder="Makati City" class="form-control" required="">
+					<label class="control-label team-name" for="country">Country: </label>
+					<div style="margin-bottom: 20px">
+						<input id="country" style= "margin: auto; color:white" value="{{country}}" name="country" type="text" placeholder="Country" class="form-control" required="">
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="control-label" for="country">Country: </label>
-					<div>
-						<input id="country" name="country" type="text" placeholder="Philippines" class="form-control" required="">
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label" for="productid">Product ID: </label>
-					<div>
-						<input id="productid" name="productid" type="text" value="{{id}}" class="form-control" required="" readonly="">
-					</div>
-				</div>
-				
+
 				<div class="form-group">
 					<div class="text-center">
 						<button type="submit" class="btn btn-primary btn-lg" title="Submit contact form">
@@ -116,11 +123,13 @@
 					</div>
 				</div>
 			</div>
-		</form>
-
-	</div>
+			{{/each}}
+        </form>
+      </div>
+  </div>
 </div>
-</main>
-					</div>
+</div>
+
+
 	
 {{> footer}}
