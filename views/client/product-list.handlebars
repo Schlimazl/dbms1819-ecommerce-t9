@@ -5,21 +5,45 @@
             <img src="/images/test.png" alt="Company name" class="logo">
             
           </a> <!-- #branding -->
+
           
           <!-- Default snippet for navigation -->
           <div class="main-navigation">
             <button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
             <ul class="menu">
               <li class="menu-item current-menu-item"><a href="/">Home</a></li>
-              <li class="menu-item"><a href="/products">Products</a></li>
-              <li class="menu-item"><a href="about.html">About</a></li>
-              <li class="menu-item"><a href="service.html">Services</a></li>
-              <li class="menu-item"><a href="gallery.html">Gallery</a></li>
-              <li class="menu-item"><a href="contact.html">Contact</a></li>
+              <li class="menu-item"><a href="/products?p=1">Products</a></li>
+              <li class="menu-item"><a href="/services">Services</a></li>
+              <li class="menu-item"><a href="/aboutus">About</a></li>
+              <li class="menu-item"><a href="/faqs">FAQs</a></li>
+              <li class="menu-item"><a href="/login">Log-in</a></li>
             </ul> <!-- .menu -->
           </div> <!-- .main-navigation -->
+
           <div class="mobile-navigation"></div>
         </div>
+        <style>
+        .pagination {
+    display: inline-block;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+}
+
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+</style>
       </header>
 
 <main class="main-content">	
@@ -38,15 +62,29 @@
                           </div>
 							          {{/each}}
 												</div>
-							</main>
-              <nav aria-label="Page navigation example">
-  <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-  </ul>
-</nav>
+			 				</main>
+
+<div style="text-align: center">
+              <div class="pagination pagination-centered" style="text-align: center">
+    {{#paginate pagination type="first"}}
+    <div class="pagination">
+      <a style="color:white"{{#if disabled}}class="disabled"{{/if}}href="?p={{n}}"><<</a>
+    {{/paginate}}
+    {{#paginate pagination type="previous"}}
+      <a style="color:white"{{#if disabled}}class="disabled"{{/if}} href="?p={{n}}"><</a>
+    {{/paginate}}
+    {{#paginate pagination type="middle" limit="{{limit}}" offset="{{offset}}"}}
+      <a style="color:white"{{#if active}}class="active"{{/if}} href="?p={{n}}">{{n}}</a>
+    {{/paginate}}
+    {{#paginate pagination type="next"}}
+      <a style="color:white"{{#if disabled}}class="disabled"{{/if}} href="?p={{n}}">></a>
+    {{/paginate}}
+    {{#paginate pagination type="last"}}
+      <a style="color:white" {{#if disabled}}class="disabled"{{/if}} href="?p={{n}}">>></a>
+    {{/paginate}}
+  </div>
+</div>
+</div>
+             
 
 {{> footer}}

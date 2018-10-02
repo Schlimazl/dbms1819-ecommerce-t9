@@ -12,13 +12,14 @@ const Customer = require('./models/customer');
 const Email = require('./utils/email');
 const Handlebars = require('handlebars');
 const MomentHandler = require('handlebars.moment');
+const paginate = require('handlebars-paginate');
 const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-
+Handlebars.registerHelper('paginate', paginate);
 MomentHandler.registerHelpers(Handlebars);
 require('dotenv').config();
 
@@ -38,8 +39,8 @@ client.connect()
   .then(function () {
     console.log('connected to database!');
   })
-  .catch(function () {
-    console.log('Error');
+  .catch(function (err) {
+    console.log(err);
   });
 
 const app = express();
@@ -162,14 +163,44 @@ app.get('/signup', function (req, res) {
     });
   });
 
+app.get('/client/update', function (req, res) {
+  Customer.getCustomerData(client,{id: req.user.id},function(user){
+    res.render('client/update_client',{
+      user: user
+    });
+  });
+});
+
+app.post('/client/update', function (req, res) {
+ bcrypt.hash(req.body.password, saltRounds).then(function(hash) {
+  Customer.update(client,{id: req.user.id},{
+    fName: req.body.first_name,
+    lName: req.body.last_name,
+    email: req.body.email,
+    pass: hash,
+    hNumber: req.body.house_number,
+    street: req.body.street,
+    brgy: req.body.barangay,
+    city: req.body.city,
+    country: req.body.country,
+    userType: 'user'
+  },function(user){
+    res.redirect('/products')
+  });
+});
+});
 
 
-
-app.get('/products', function (req, res) {
-  Product.list(client, {}, function (products) {
+app.get('/products', function (req, res, next) {
+  Product.list(client, {limit: 8}, {offset: (req.query.p - 1) * 8}, {}, function (products) {
     res.render('client/product-list', {
-      title: 'Top Products',
-      products: products
+      products: products,
+      title: 'Products',
+      pagination: {
+        page: req.query.p || 1,
+        limit: 8,
+        n: req.query.p || 1
+      }
     });
   });
 });
@@ -184,14 +215,46 @@ app.get('/error', function (req, res) {
 
 app.get('/products/:id', (req, res) => {
   if(req.isAuthenticated()){
-  Product.getById(client, req.params.id, function (productData) {
-    res.render('client/products', productData);
-  });
-}
+ client.query('SELECT products_category.name AS categoryname, products.price AS price, products.id AS id, products.name AS productname, products.pic AS pic, products.descriptions AS desc, products_brand.name AS productbrand FROM products INNER JOIN products_category ON products_category.id = products.category_id INNER JOIN products_brand ON products_brand.id = products.brand_id  WHERE products.id = ' + req.params.id + '; ')
+    .then((products) => {
+      console.log(products);
+        client.query('SELECT * FROM customers WHERE id = ' + req.user.id + '; ')
+        .then((customerData) => {
+          res.render('client/products', {
+            product: products.rows,
+            customer: customerData.rows
+          });
+        });
+      })
+    .catch((err) => {
+      console.log('error', err);
+      res.send('Error!');
+    });
+    }
   else{
     res.redirect('/login');
   }
   });
+
+app.get('/services', function (req, res) {
+  res.render('client/services', {
+    title: 'Services',
+  });
+});
+
+app.get('/faqs', function (req, res) {
+  res.render('client/faqs', {
+    title: 'Contact Us',
+  });
+});
+
+app.get('/aboutus', function (req, res) {
+  res.render('client/about', {
+    title: 'About Us',
+  });
+});
+
+
 
 
 // ------------------------ CONTENT MANAGEMENT SYSTEM ------------------------------------------
@@ -588,7 +651,8 @@ app.post('/products/:id/send', function (req, res) {
   client.query("SELECT id from customers WHERE email = '" + req.body.email + "';")
     .then((results) => {
       var id = results.rows[0].id;
-      console.log(id);
+      console.log('id: ', id);
+
       client.query("INSERT INTO orders (customers_id,products_id,quantity) VALUES ('" + id + "','" + req.body.productid + "','" + req.body.quantity + "')")
         .then((results) => {
           var maillist = ['kofe41fiho@gmail.com', 'jhnkrkgrspe@gmail.com', req.body.email];
@@ -640,7 +704,7 @@ app.post('/products/:id/send', function (req, res) {
         })
         .catch((err) => {
           console.log('error', err);
-          res.send('Error!');
+          res.send('Error--');
         });
     })
     .catch((err) => {

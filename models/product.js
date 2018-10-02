@@ -31,6 +31,27 @@ var Product = {
       callback(productData);
     })
   },
+  getUserById: (client, userId, callback) =>{
+    const userQuery = `SELECT * FROM customers WHERE id = ${userId}`;
+    client.query(userQuery, (req, data) =>{
+      callback(data.rows);
+    })
+  },
+
+  list: (client, limit, offset, filter, callback) => {
+    const productListQuery = `
+    SELECT * 
+    FROM products 
+    ORDER BY id
+   LIMIT '${limit.limit}' OFFSET '${offset.offset}'
+    `;
+    client.query(productListQuery, (req, data) => {
+      console.log(data.rows);
+      callback(data.rows);
+    });
+    console.log(productListQuery);
+  },
+
 create: (client,productData,callback) => {
       var productData = [
       productData.product_name,
@@ -48,14 +69,6 @@ create: (client,productData,callback) => {
       .then(res => callback('SUCCESS'))
       .catch(e => callback('ERROR'))
     },
-
-  list: (client, filter, callback) => {
-    const productListQuery = `SELECT * FROM Products`;
-    client.query(productListQuery, (req, data) =>{
-      console.log(data.rows);
-      callback(data.rows);
-    });
-  }
 }
 
 module.exports = Product;

@@ -16,7 +16,7 @@ var Brand = {
         SELECT
           *
         FROM
-          products_brand order by id ASC
+          products_brand order by name ASC
       `;
       client.query(brandListQuery,(req,result)=>{
         callback(result.rows)

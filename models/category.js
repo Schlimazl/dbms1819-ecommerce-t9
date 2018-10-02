@@ -13,7 +13,7 @@ var Category = {
     },
     
   list: (client, filter, callback) => {
-    const categoryListQuery = `SELECT * FROM products_category ORDER BY id ASC`;
+    const categoryListQuery = `SELECT * FROM products_category ORDER BY name ASC`;
     client.query(categoryListQuery, (req, result) =>{
       callback(result.rows);
     });
