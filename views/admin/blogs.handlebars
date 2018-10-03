@@ -38,10 +38,9 @@
                             <td>{{this.url}}</td>
                             <td>{{this.pic}}</td>
                             <td class="td-actions text-right">
-                                <button type="button" rel="tooltip" title="Edit Blog" class="btn btn-primary btn-link btn-sm">
-                                <i class="material-icons">build</i>
-                                </button>
-                                
+                                <a type="button" href="/admin/blog/update/{{this.id}}" rel="tooltip" class="btn btn-success" title="Edit Blog">
+                                    <i class="material-icons">build</i>
+                                </a>
                            </td>
                           </tr>
                         {{/each}}

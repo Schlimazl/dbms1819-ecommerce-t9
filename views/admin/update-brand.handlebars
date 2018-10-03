@@ -1,0 +1,17 @@
+<div class="container pb-5 mb-5" style="margin-top: 50px">
+  <div class="jumbotron mt-2">
+<div class="modal-body">
+  {{#each brand}}
+         <form method="post" action="/admin/update/brand/{{this.id}}">
+            <div class="form-group">
+              Brand Name: <input type="text" class="form-control" placeholder="{{this.name}}" name="name" required>
+              Description: <input type="text" class="form-control" placeholder="{{this.description}}" name="desc" required>
+               <button type="submit" class="btn btn-primary btn-lg" title="Submit contact form">
+            Update
+            </button>
+            </div>
+        </form>
+    {{/each}}
+</div>
+</div>
+</div>

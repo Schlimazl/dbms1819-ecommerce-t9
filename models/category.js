@@ -17,7 +17,34 @@ var Category = {
     client.query(categoryListQuery, (req, result) =>{
       callback(result.rows);
     });
-  }
+  },
+     getById: (client,id,callback) => {
+      const categoryListQuery =  `
+        SELECT
+          *
+        FROM
+          products_category 
+        WHERE
+          id = '${id.categoryId}'
+      `;
+      client.query(categoryListQuery,(req,result)=>{
+       console.log(result.rows)
+        callback(result.rows)
+      });
+    },
+    update: (client,categoryId,categoryData,callback) => {
+      const categoryListQuery =  `
+        UPDATE
+          products_category
+        SET
+          name = '${categoryData.name}'
+        WHERE id = '${categoryId.categoryId}'
+      `;
+      client.query(categoryListQuery,(req,result)=>{
+      //  console.log(result.rows)
+        callback(result)
+      });
+    }
 }
 
 module.exports = Category;
