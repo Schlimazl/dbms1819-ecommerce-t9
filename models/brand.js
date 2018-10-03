@@ -21,6 +21,33 @@ var Brand = {
       client.query(brandListQuery,(req,result)=>{
         callback(result.rows)
       });
+    },
+    getById: (client,id,callback) => {
+      const brandListQuery =  `
+        SELECT
+          *
+        FROM
+          products_brand
+        WHERE
+          id = '${id.brandId}'
+      `;
+      client.query(brandListQuery,(req,result)=>{
+      //  console.log(result.rows)
+        callback(result.rows)
+      });
+    },
+    update: (client,brandId,brandData,callback) => {
+      const brandListQuery =  `
+        UPDATE
+          products_brand
+        SET
+          name = '${brandData.name}', description = '${brandData.desc}'
+        WHERE id = '${brandId.brandId}'
+      `;
+      client.query(brandListQuery,(req,result)=>{
+      //  console.log(result.rows)
+        callback(result)
+      });
     }
   }
 

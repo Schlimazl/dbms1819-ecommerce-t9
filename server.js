@@ -9,6 +9,7 @@ const Category = require('./models/category');
 const Brand = require('./models/brand');
 const Order = require('./models/order');
 const Customer = require('./models/customer');
+const Content = require('./models/content');
 const Email = require('./utils/email');
 const Handlebars = require('handlebars');
 const MomentHandler = require('handlebars.moment');
@@ -463,6 +464,25 @@ app.get('/admin/category/create', isAdmin, function (req, res) {
   });
 });
 
+app.get('/admin/category/update/:id',isAdmin, function (req, res) {
+     Category.getById(client,{categoryId: req.params.id},function(category){
+    res.render('admin/update-category',{
+      category: category,
+      layout: 'cms'
+    });
+  });
+});
+
+app.post('/admin/update/category/:id', function (req, res) {
+  Category.update(client,{categoryId: req.params.id},{
+    name: req.body.name,
+  },function(category){
+    console.log(category);
+    res.redirect('/admin/categories')
+  });
+});
+
+
 // ---------------------------BRANDS------------------------
 app.get('/admin/brands', isAdmin, function (req, res) {
 Brand.list(client,{},function(brands){
@@ -474,12 +494,29 @@ Brand.list(client,{},function(brands){
     });
 });
 
-
-
 app.get('/admin/brand/create',  isAdmin, function (req, res) {
   res.render('admin/create-brand', {
     title: 'Create Brand',
     layout: 'cms'
+  });
+});
+
+app.get('/admin/brand/update/:id', isAdmin,function (req, res) {
+     Brand.getById(client,{brandId: req.params.id},function(brand){
+    res.render('admin/update-brand',{
+      brand: brand,
+      layout: 'cms'
+    });
+  });
+});
+
+app.post('/admin/update/brand/:id', function (req, res) {
+  Brand.update(client,{brandId: req.params.id},{
+    name: req.body.name,
+    desc: req.body.desc
+  },function(brand){
+    console.log(brand);
+    res.redirect('/admin/brands')
   });
 });
 
@@ -506,6 +543,28 @@ app.get('/admin/stylist/add',  isAdmin, function (req, res) {
   });
 });
 
+app.get('/admin/stylist/update/:id', isAdmin,function (req, res) {
+     Content.stylistGetById(client,{stylistId: req.params.id},function(stylist){
+    res.render('admin/update-stylist',{
+      stylist: stylist,
+      layout: 'cms'
+    });
+  });
+});
+
+app.post('/admin/update/stylist/:id', function (req, res) {
+  Content.stylistUpdate(client,{stylistId: req.params.id},{
+    name: req.body.name,
+    desc: req.body.desc,
+    pic: req.body.pic,
+    fb: req.body.fb,
+    ig: req.body.ig
+  },function(stylist){
+    console.log(stylist);
+    res.redirect('/admin/stylists')
+  });
+});
+
 //---------------------------BLOGS-------------------------
 app.get('/admin/blogs', isAdmin, function (req, res) {
   client.query('SELECT * FROM blog')
@@ -526,6 +585,27 @@ app.get('/admin/blog/add', isAdmin, function (req, res) {
   res.render('admin/add-blog', {
     title: 'Add blog',
     layout: 'cms'
+  });
+});
+
+app.get('/admin/blog/update/:id', isAdmin,function (req, res) {
+     Content.getById(client,{blogId: req.params.id},function(blog){
+    res.render('admin/update-blog',{
+      blog: blog,
+      layout: 'cms'
+    });
+  });
+});
+
+app.post('/admin/update/blog/:id', function (req, res) {
+  Content.update(client,{blogId: req.params.id},{
+    name: req.body.name,
+    desc: req.body.desc,
+    url: req.body.url,
+    pic: req.body.pic
+  },function(blog){
+    console.log(blog);
+    res.redirect('/admin/blogs')
   });
 });
 
