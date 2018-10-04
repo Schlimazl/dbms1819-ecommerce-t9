@@ -134,7 +134,7 @@ function isAdmin(req, res, next) {
         return next();
     }
     else{
-      res.redirect('/products');
+      res.redirect('/products?p=1');
     }
   });
   }
@@ -186,7 +186,7 @@ app.post('/client/update', function (req, res) {
     country: req.body.country,
     userType: 'user'
   },function(user){
-    res.redirect('/products')
+    res.redirect('/products?p=1')
   });
 });
 });
