@@ -15,6 +15,10 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- CSS Files -->
   <link href="/cms/assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/custom.css">
+        <script type="text/javascript" src="/js/chart.bundle.js"></script>
+    <script type="text/javascript" src="/js/chart.bundle.min.js"></script>
   
 </head>
 
@@ -45,13 +49,17 @@
               <p>Customers</p>
             </a>
           </li>
-          <li class="nav-item active ">
-            <a class="nav-link" href="/admin/categories">
-              <i class="material-icons">library_books</i>
-              <p>Categories</p>
-            </a>
-          </li>
-          <li class="nav-item active ">
+        <div class="dropdown" style="margin-left: 15px; margin-top:10px">
+          <button class="btn btn-primary dropdown-toggle" type="button" style="padding: 15px 73px"id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+            Categories
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/admin/main-category-1">Category 1</a>
+            <a class="dropdown-item" href="/admin/main-category-2">Category 2</a>
+            <a class="dropdown-item" href="/admin/main-category-3">Category 3</a>
+          </div>
+        </div>         
+         <li class="nav-item active ">
             <a class="nav-link" href="/admin/brands">
               <i class="material-icons">storage</i>
               <p>Brands</p>

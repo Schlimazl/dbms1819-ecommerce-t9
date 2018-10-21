@@ -18,6 +18,24 @@ var Category = {
       callback(result.rows);
     });
   },
+    listMainCategory1: (client, filter, callback) => {
+    const categoryListQuery = `SELECT * FROM products_category where main_category_id = '1'  ORDER BY name ASC`;
+    client.query(categoryListQuery, (req, result) =>{
+      callback(result.rows);
+    });
+  },
+    listMainCategory2: (client, filter, callback) => {
+    const categoryListQuery = `SELECT * FROM products_category where main_category_id = '2'  ORDER BY name ASC`;
+    client.query(categoryListQuery, (req, result) =>{
+      callback(result.rows);
+    });
+  },
+    listMainCategory3: (client, filter, callback) => {
+    const categoryListQuery = `SELECT * FROM products_category where main_category_id ='3' ORDER BY name ASC`;
+    client.query(categoryListQuery, (req, result) =>{
+      callback(result.rows);
+    });
+  },
      getById: (client,id,callback) => {
       const categoryListQuery =  `
         SELECT

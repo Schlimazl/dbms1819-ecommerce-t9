@@ -15,7 +15,7 @@
       "git add"
     ]
   },
-  "engines":{
+  "engines": {
     "node": "8.11.3"
   },
   "dependencies": {
@@ -25,8 +25,10 @@
     "express-handlebars": "*",
     "express-layout": "^0.1.0",
     "express-session": "^1.15.6",
+    "handlebars-intl": "^1.1.2",
     "handlebars-paginate": "^0.1.0",
     "handlebars.moment": "^1.0.4",
+    "handlebars.numeral": "^0.2.0",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.21",
     "nodemailer": "^4.6.7",

@@ -12,6 +12,8 @@ const Customer = require('./models/customer');
 const Content = require('./models/content');
 const Email = require('./utils/email');
 const Handlebars = require('handlebars');
+const NumeralHelper = require("handlebars.numeral");
+//const HandlebarsIntl = require('handlebars-intl');
 const MomentHandler = require('handlebars.moment');
 const paginate = require('handlebars-paginate');
 const passport = require('passport');
@@ -20,9 +22,13 @@ const session = require('express-session');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+//HandlebarsIntl.registerWith(Handlebars);
+NumeralHelper.registerHelpers(Handlebars);
 Handlebars.registerHelper('paginate', paginate);
 MomentHandler.registerHelpers(Handlebars);
 require('dotenv').config();
+
+
 
 // moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
 
@@ -304,6 +310,18 @@ Customer.top10CustomerHighestPayment(client,{},function(result){
         top10MostOrderedProducts: top10MostOrderedProducts,
         top3OrderedCategories: top3OrderedCategories,
         top3OrderedBrands: top3OrderedBrands,
+        top1BrandName : top3OrderedBrands[0].name,
+        top2BrandName : top3OrderedBrands[1].name,
+        top3BrandName : top3OrderedBrands[2].name,
+        top1BrandOrder : top3OrderedBrands[0].sum,
+        top2BrandOrder : top3OrderedBrands[1].sum,
+        top3BrandOrder : top3OrderedBrands[2].sum,
+        top1CategoryName : top3OrderedCategories[0].name,
+        top2CategoryName : top3OrderedCategories[1].name,
+        top3CategoryName : top3OrderedCategories[2].name,
+        top1CategoryOrder : top3OrderedCategories[0].sum,
+        top2CategoryOrder : top3OrderedCategories[1].sum,
+        top3CategoryOrder : top3OrderedCategories[2].sum,
         totalsales30days : totalSales30days[0].total,
         totalsales7days : totalSales7days[0].total,
         dailyordercount : dailyOrderCount[0].count,
@@ -457,6 +475,35 @@ app.get('/admin/categories', isAdmin, function (req, res) {
   });
 });
 
+app.get('/admin/main-category-1', isAdmin, function (req, res) {
+  Category.listMainCategory1(client, {}, function (category) {
+    res.render('admin/main-category-1', {
+      title: 'Categories',
+      layout: 'cms',
+      category: category
+    });
+  });
+});
+
+app.get('/admin/main-category-2', isAdmin, function (req, res) {
+  Category.listMainCategory2(client, {}, function (category) {
+    res.render('admin/main-category-2', {
+      title: 'Categories',
+      layout: 'cms',
+      category: category
+    });
+  });
+});
+
+app.get('/admin/main-category-3', isAdmin, function (req, res) {
+  Category.listMainCategory3(client, {}, function (category) {
+    res.render('admin/main-category-3', {
+      title: 'Categories',
+      layout: 'cms',
+      category: category
+    });
+  });
+});
 app.get('/admin/category/create', isAdmin, function (req, res) {
   res.render('admin/create-category', {
     title: 'Create Category',

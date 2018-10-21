@@ -6,7 +6,7 @@
                     <i class="material-icons">monetization_on</i>
                   </div>
                   <p class="card-category">Revenue</p>
-                  <h3 class="card-title">Php {{totalsales7days}}</h3>
+                  <h3 class="card-title">Php {{number totalsales7days}}.00</h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
@@ -22,7 +22,7 @@
                     <i class="material-icons">monetization_on</i>
                   </div>
                   <p class="card-category">Revenue</p>
-                  <h3 class="card-title">Php {{totalsales30days}}</h3>
+                  <h3 class="card-title">Php {{number totalsales30days}}.00</h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
@@ -53,23 +53,101 @@
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">TOP 3</h4>
-                  <p class="card-category">Most ordered brands</p>
+                  <p class="card-category">Most ordered brand</p>
                 </div>
                 <div class="card-body table-responsive">
-                  <table class="table table-hover">
-                    <thead class="text-primary">
-                      <th>Name</th>
-                      <th>No. of Orders</th>
-                    </thead>
-                    <tbody>
-                      {{#each top3OrderedBrands}}
-                      <tr>
-                        <td>{{this.name}} </td>
-                        <td>{{this.sum}}</td>
-                      </tr>
-                      {{/each}}
-                    </tbody>
-                  </table>
+              <h5>Top 3 Most Ordered Brands</h5><br>
+              <input type="hidden" id="brand1name" value ="{{top1BrandName}}">
+              <input type="hidden" id="brand2name" value ="{{top2BrandName}}">
+              <input type="hidden" id="brand3name" value ="{{top3BrandName}}">
+              <input type="hidden" id="brand1count" value ="{{top1BrandOrder}}">
+              <input type="hidden" id="brand2count" value ="{{top2BrandOrder}}">
+              <input type="hidden" id="brand3count" value ="{{top3BrandOrder}}">
+              <input type="hidden" id="category1name" value ="{{top1CategoryName}}">
+              <input type="hidden" id="category2name" value ="{{top2CategoryName}}">
+              <input type="hidden" id="category3name" value ="{{top3CategoryName}}">
+              <input type="hidden" id="category1count" value ="{{top1CategoryOrder}}">
+              <input type="hidden" id="category2count" value ="{{top2CategoryOrder}}">
+              <input type="hidden" id="category3count" value ="{{top3CategoryOrder}}">
+              <canvas id="myChartBrands"></canvas>
+              <script>
+              var ctx = document.getElementById("myChartBrands").getContext('2d');
+              var brand1Name = document.getElementById('brand1name').value;
+              var brand2Name = document.getElementById('brand2name').value;
+              var brand3Name = document.getElementById('brand3name').value;
+              var brand1Count = parseInt(document.getElementById('brand1count').value);
+              var brand2Count = parseInt(document.getElementById('brand2count').value);
+              var brand3Count = parseInt(document.getElementById('brand3count').value);
+              var category1Name = document.getElementById('category1name').value;
+              var category2Name = document.getElementById('category2name').value;
+              var category3Name = document.getElementById('category3name').value;
+              var category1Count = parseInt(document.getElementById('category1count').value);
+              var category2Count = parseInt(document.getElementById('category2count').value);
+              var category3Count = parseInt(document.getElementById('category3count').value);
+              var myChartBrands = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [ brand1Name, brand2Name, brand3Name],
+                    datasets: [{
+                        label: 'Orders',
+                        data: [brand1Count,brand2Count,brand3Count],
+                        backgroundColor:
+                        [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 206, 86, 0.5)'
+                        ],
+                        borderColor:
+                        [
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options:
+                {
+                  legend: {display: false},
+                  tooltips:
+                  {
+                    enabled: true,
+                    mode: 'single',
+                    backgroundColor: 'rgba(0,0,0,0.5)',
+                    titleFontSize: 14,
+                    cornerRadius: 5, 
+                  },
+                  scales:
+                  {
+                    yAxes:
+                    [{
+                      scaleLabel:
+                      {
+                        display: true,
+                        labelString: 'ORDERS',
+                        fontSize: 15,
+                        padding: 12
+                      },
+                      ticks: {beginAtZero: true}
+                    }],
+                    xAxes:
+                    [{
+                      display: true,
+                      scaleLabel:
+                      {
+                        display: true,
+                        labelString: 'BRAND',
+                        fontSize: 15,
+                        padding: 5
+                      },
+                      ticks: {display: true}
+                    }]
+                  }
+                },
+              });
+              Chart.defaults.global.defaultFontColor = 'white';
+              </script>
+
                 </div>
               </div>
             </div>
@@ -77,27 +155,82 @@
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">TOP 3</h4>
-                  <p class="card-category">Most ordered categories</p>
+                  <p class="card-category">Most ordered category</p>
                 </div>
                 <div class="card-body table-responsive">
-                  <table class="table table-hover">
-                    <thead class="text-primary">
-                      <th>Name</th>
-                      <th>No. of Orders</th>
-                    </thead>
-                    <tbody>
-                      {{#each top3OrderedCategories}}
-                      <tr>
-                        <td>{{this.name}} </td>
-                        <td>{{this.sum}}</td>
-                      </tr>
-                      {{/each}}
-                    </tbody>
-                  </table>
+                                <h5>Top 3 Most Ordered Category</h5><br>
+              <canvas id="myChartCategory"></canvas>
+              <script>
+              var ctx = document.getElementById("myChartCategory").getContext('2d');
+              var myChartCategory = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [category1Name, category2Name, category3Name],
+                    datasets: [{
+                        label: 'Orders',
+                        data: [category1Count, category2Count,category3Count],
+                        backgroundColor:
+                        [
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(153, 102, 255, 0.5)',
+                            'rgba(255, 159, 64, 0.5)'
+                        ],
+                        borderColor:
+                        [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options:
+                {
+                  legend: {display: false},
+                  tooltips:
+                  {
+                    enabled: true,
+                    mode: 'single',
+                    backgroundColor: 'rgba(0,0,0,0.5)',
+                    titleFontSize: 14,
+                    cornerRadius: 5, 
+                  },
+                  scales:
+                  {
+                    yAxes:
+                    [{
+                      scaleLabel:
+                      {
+                        display: true,
+                        labelString: 'ORDERS',
+                        fontSize: 15,
+                        padding: 12
+                      },
+                      ticks: {beginAtZero: true}
+                    }],
+                    xAxes:
+                    [{
+                      display: true,
+                      scaleLabel:
+                      {
+                        display: true,
+                        labelString: 'CATEGORY',
+                        fontSize: 15,
+                        padding: 5
+                      },
+                      ticks: {display: true}
+                    }]
+                  }
+                },
+              });
+              Chart.defaults.global.defaultFontColor = 'white';
+              </script>
 </div>
 </div>
 </div>
 </div>
+
+
 <div class="row">
             <div class="col-lg-6 col-md-12">
               <div class="card">
@@ -152,7 +285,6 @@
 </div>
 </div>
 </div>
-
 <div class="row">
             <div class="col-lg-6 col-md-12">
               <div class="card">
@@ -178,7 +310,7 @@
                 </div>
               </div>
             </div>
- <div class="col-lg-6 col-md-12">
+        <div class="col-lg-6 col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title">TOP 10</h4>
@@ -199,7 +331,12 @@
                       {{/each}}
                     </tbody>
                   </table>
-</div>
+                </div>
+                </div>
+                </div>
 </div>
 
+</div>
 
+</div>
+</div>

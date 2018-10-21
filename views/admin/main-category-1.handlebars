@@ -1,0 +1,46 @@
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Categories</h4>
+                   <a role="button" class="btn btn-primary btn-sm" href="/admin/category/create" style="background-color: white; color: purple">Add a category</button></a>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>
+                          Name
+                        </th>
+                        <th class="text-right">
+                          Action
+                        </th>
+                      </thead>
+                      <tbody>
+                        {{#each category}}
+                        <tr>
+                            <td>{{this.name}}</td>
+                            <td class="td-actions text-right">
+                                <a type="button" href="/admin/category/update/{{this.id}}" rel="tooltip" class="btn btn-success" title="Edit Category">
+                                    <i class="material-icons">build</i>
+                                </a>
+                           </td>
+                          </tr>
+                        {{/each}}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <!-- your content here -->
+        </div>
+      </div>
+
+
+
