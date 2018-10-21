@@ -27,7 +27,7 @@
                           Price
                         </th>
                         <th>
-                          Description
+                          Expiration Date
                         </th>
                         <th class="text-right">
                           Action
@@ -39,8 +39,8 @@
                             <td>{{this.productname}}</td>
                             <td>{{this.productbrand}}</td>
                             <td>{{this.categoryname}}</td>
-                            <td>{{this.price}}</td>
-                            <td>{{this.desc}}</td>
+                            <td>Php {{number this.price}}.00</td>
+                            <td>{{moment this.expiration "LLL"}}</td>
                             <td class="td-actions text-right">
                                 <a role="button" href="/admin/products/{{this.id}}" rel="tooltip" class="btn btn-info" data-toggle="popover" data-content="Update">
                                     <i class="material-icons">photo_album</i>
