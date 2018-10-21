@@ -13,7 +13,6 @@ const Content = require('./models/content');
 const Email = require('./utils/email');
 const Handlebars = require('handlebars');
 const NumeralHelper = require("handlebars.numeral");
-//const HandlebarsIntl = require('handlebars-intl');
 const MomentHandler = require('handlebars.moment');
 const paginate = require('handlebars-paginate');
 const passport = require('passport');
