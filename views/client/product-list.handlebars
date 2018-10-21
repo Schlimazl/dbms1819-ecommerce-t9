@@ -66,10 +66,6 @@
 
 <div style="text-align: center">
               <div class="pagination pagination-centered" style="text-align: center">
-    {{#paginate pagination type="first"}}
-    <div class="pagination">
-      <a style="color:white"{{#if disabled}}class="disabled"{{/if}}href="?p={{n}}"><<</a>
-    {{/paginate}}
     {{#paginate pagination type="previous"}}
       <a style="color:white"{{#if disabled}}class="disabled"{{/if}} href="?p={{n}}"><</a>
     {{/paginate}}
